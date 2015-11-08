@@ -5,7 +5,9 @@ import android.content.Context;
 
 import com.codepath.apps.DoGether.models.User;
 import com.parse.Parse;
+import com.parse.ParseACL;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 /*
  * This is the Android application itself and is used to configure various settings
@@ -28,7 +30,13 @@ public class RestApplication extends Application {
 		RestApplication.context = this;
 		//Parse.enableLocalDatastore(this);
 		ParseObject.registerSubclass(User.class);
+        Parse.enableLocalDatastore(this);
 		Parse.initialize(this, YOUR_APPLICATION_ID, YOUR_CLIENT_KEY);
+        ParseUser.enableAutomaticUser();
+        ParseACL defaultACL = new ParseACL();
+        // Optionally enable public read access.
+        // defaultACL.setPublicReadAccess(true);
+        ParseACL.setDefaultACL(defaultACL, true);
 
 	}
 
