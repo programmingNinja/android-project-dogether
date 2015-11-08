@@ -1,6 +1,5 @@
 package com.codepath.apps.DoGether.LocalModels;
 
-//import com.orm.SugarRecord;
 
 import com.orm.SugarRecord;
 
@@ -11,8 +10,8 @@ import java.util.List;
  */
 public class LocalSubscription extends SugarRecord<LocalSubscription> {
     String id;
-    LocalSubscription() {}
-    LocalSubscription(String id) {
+    public LocalSubscription() {}
+    public LocalSubscription(String id) {
         this.id = id;
     }
     public void saveLocalSubscription() {

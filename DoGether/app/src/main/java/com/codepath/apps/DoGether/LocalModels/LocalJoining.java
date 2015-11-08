@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class LocalJoining extends SugarRecord<LocalJoining> {
     String id;
-    LocalJoining() {}
+    public LocalJoining() {}
     LocalJoining(String id) {
         this.id = id;
     }

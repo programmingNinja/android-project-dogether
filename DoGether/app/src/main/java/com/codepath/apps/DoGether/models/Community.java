@@ -65,4 +65,11 @@ public class Community extends ParseObject  {
             }
         });
     }
+    public void saveCommunity() {
+        try {
+            this.save();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
 }

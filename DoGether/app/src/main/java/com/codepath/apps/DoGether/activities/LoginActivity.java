@@ -2,6 +2,7 @@ package com.codepath.apps.DoGether.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
@@ -15,6 +16,7 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Log.d("loginAct","loginAct onCreate");
 		setContentView(R.layout.activity_login);
 		//ParseTwitterUtils.initialize("fjzW8u4XxQC2oj973r7m2oYhK", "T0anSzwnOjNX2KP6Xw7D5EhhWvewfVQKmMtdgP2qvoZkTDdJd6");
 	}
@@ -31,7 +33,9 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 	// i.e Display application "homepage"
 	@Override
 	public void onLoginSuccess() {
-		if (LocalSubscription.getAll().length > 0) {
+		Log.d("loginAct","loginAct onSuccess");
+
+		if (LocalSubscription.getAll().length <= 0) {
 			Intent i = new Intent(this, ProfileActivity.class);
 			startActivity(i);
 		} else {

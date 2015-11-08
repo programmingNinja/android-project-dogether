@@ -1,11 +1,15 @@
 package com.codepath.apps.DoGether.models;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.activeandroid.util.Log;
+import com.codepath.apps.DoGether.LocalModels.LocalUser;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -24,6 +28,7 @@ import java.util.List;
 public class User extends ParseObject {
 
     private String id_str;
+
 //    private String name;
 //    private Date createdAt;
 //    private String screen_name;
@@ -55,6 +60,8 @@ public class User extends ParseObject {
     }
     public static User fromJson(JSONObject jsonObject) {
 
+        android.util.Log.d("User", "User FromJSON");
+
         try {
             User u = new User();
             u.setUser(jsonObject.getString("id_str"), jsonObject.getString("name"), jsonObject.getString("screen_name"), jsonObject.getString("profile_image_url"));
@@ -79,7 +86,14 @@ public class User extends ParseObject {
                     if (itemList.size() <= 0) {
                         u.saveInBackground();
                         //System.out.println("saved user ");
+                        if(LocalUser.getCount() <= 0) {
+                            // set localUser
+                            LocalUser localUser = new LocalUser(itemList.get(0).getObjectId());
+                            localUser.saveLocalUser();
+                        }
+
                     }
+
                     //else System.out.println("duplicate user");
                     // Access the array of results here
                     //String firstItemId = itemList.get(0).getObjectId();

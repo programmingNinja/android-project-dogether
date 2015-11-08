@@ -2,9 +2,15 @@ package com.codepath.apps.DoGether;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 
+import com.codepath.apps.DoGether.models.Community;
+import com.codepath.apps.DoGether.models.Event;
+import com.codepath.apps.DoGether.models.Subscription;
 import com.codepath.apps.DoGether.models.User;
 import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 
 /*
@@ -17,7 +23,7 @@ import com.parse.ParseObject;
  *
  */
 //com.activeandroid.app.Application
-public class RestApplication extends Application {
+public class RestApplication extends com.orm.SugarApp {
 	private static Context context;
 	public static final String YOUR_APPLICATION_ID = "1bq93Tp6jYvzToqSS6vdJ6PJrn3ivr32lixRhO7v";
 	public static final String YOUR_CLIENT_KEY = "nOUO3ZCDKpbc6nJmcJJF0tGdEArNMzN3hF9z9cMZ";
@@ -25,11 +31,30 @@ public class RestApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		Log.d("restApp", "RestApp onCreate");
 		RestApplication.context = this;
 		//Parse.enableLocalDatastore(this);
 		ParseObject.registerSubclass(User.class);
+		ParseObject.registerSubclass(Subscription.class);
+		ParseObject.registerSubclass(Event.class);
+		ParseObject.registerSubclass(Community.class);
 		Parse.initialize(this, YOUR_APPLICATION_ID, YOUR_CLIENT_KEY);
 
+		// community records added hence commenting out
+		//insertIntoCommunities();
+
+	}
+
+	private void insertIntoCommunities() {
+		Community[] communitites = new Community[5];
+		for(int i=0 ; i<5 ; i++) {
+			Community c = new Community("Com"+i, new ParseGeoPoint(new Double(10.0), new Double(10.0)));
+			try {
+				c.save();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public static TwitterClient getRestClient() {

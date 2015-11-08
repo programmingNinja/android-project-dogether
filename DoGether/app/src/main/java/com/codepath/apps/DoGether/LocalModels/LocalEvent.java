@@ -1,13 +1,9 @@
 package com.codepath.apps.DoGether.LocalModels;
 
-import android.content.Context;
-
 import com.orm.SugarRecord;
 
-import java.util.ArrayList;
 import java.util.List;
 
-//import com.orm.SugarRecord;
 
 /**
  * Created by rshah4 on 11/7/15.
@@ -15,7 +11,7 @@ import java.util.List;
 public class LocalEvent extends SugarRecord<LocalEvent> {
     String id;
 
-    LocalEvent() {}
+    public LocalEvent() {}
     LocalEvent(String id) {
         this.id = id;
     }
