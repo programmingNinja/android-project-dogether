@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class LocalUser extends SugarRecord<LocalUser> {
 
-    String id;
+    private static String id;
 
     public LocalUser() {}
     public LocalUser(String id) {
@@ -19,7 +19,7 @@ public class LocalUser extends SugarRecord<LocalUser> {
         this.save();
     }
 
-    public String getUser() {
+    public static String getUser() {
         return LocalUser.findById(LocalUser.class, Long.parseLong(id)).id;
     }
 

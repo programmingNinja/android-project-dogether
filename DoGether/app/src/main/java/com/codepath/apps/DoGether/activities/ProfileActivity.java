@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import com.codepath.apps.DoGether.LocalModels.LocalSubscription;
@@ -35,12 +36,21 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     private Spinner communitiesSpinner;
     private String[] communityName;
     private String[] communityId;
+    private Button btnSubscribe;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d("profileAct", "profileAct onCreate");
         setContentView(R.layout.activity_profile);
         instantiate();
+        btnSubscribe = (Button)findViewById(R.id.btnSubscribe);
+        btnSubscribe.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                subscribe();
+            }
+        });
+
         client = RestApplication.getRestClient();
         client.getUserInfo(new JsonHttpResponseHandler() {
 
@@ -97,25 +107,27 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
 
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+    public void subscribe(){
+       if(communitiesSpinner.getSelectedItem() != null){
 
-        // get from localUser
-        LocalUser localUser = new LocalUser();
-        String objectId = localUser.getUser();
+           //LocalUser localUser = new LocalUser();
+           String objectId = LocalUser.getUser();
 
-        // update local
-        LocalSubscription localSubscription = new LocalSubscription(communityId[position]);
-        localSubscription.saveLocalSubscription();
+           // update local
+           LocalSubscription localSubscription = new LocalSubscription(communitiesSpinner.getSelectedItem().toString());
+           localSubscription.saveLocalSubscription();
 
-        //update parse
-        Subscription subscription = new Subscription();
-        subscription.subscribe(objectId,communityId[position]);
+           //update parse DB
+           Subscription subscription = new Subscription();
+           subscription.subscribe(objectId,communitiesSpinner.getSelectedItem().toString());
 
-        System.out.println("selected object id of community" + communityId[position]);
-        System.out.println("selected object id of user" + objectId);
+           //Update parse Channel for push notification
 
-        // TODO: 11/8/15  move to a different activity here
+           //System.out.println("selected object id of community" + communityId[position]);
+           System.out.println("selected object id of user" + objectId);
+           // TODO: 11/8/15  move to a different activity here
+
+       }
     }
 
     @Override

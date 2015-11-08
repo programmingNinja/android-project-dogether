@@ -52,11 +52,8 @@ public class CreateEventActivity extends ActionBarActivity {
     }
 
     public void broadcast(){
-        LinkedList<String> channels = new LinkedList<String>();
-        //channels.add("Giants");
-        channels.add("Giants");
         ParsePush push = new ParsePush();
-        push.setChannels(channels); // Notice we use setChannels not setChannel
+        push.setChannel("Giants"); // Notice we use setChannels not setChannel
         push.setMessage("The Giants won against the Mets 2-3.");
         push.sendInBackground();
     }
