@@ -11,7 +11,9 @@ import com.codepath.apps.DoGether.models.User;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseACL;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 /*
  * This is the Android application itself and is used to configure various settings
@@ -39,6 +41,11 @@ public class RestApplication extends com.orm.SugarApp {
 		ParseObject.registerSubclass(Event.class);
 		ParseObject.registerSubclass(Community.class);
 		Parse.initialize(this, YOUR_APPLICATION_ID, YOUR_CLIENT_KEY);
+        ParseUser.enableAutomaticUser();
+        ParseACL defaultACL = new ParseACL();
+        // Optionally enable public read access.
+        // defaultACL.setPublicReadAccess(true);
+        ParseACL.setDefaultACL(defaultACL, true);
 
 		// community records added hence commenting out
 		//insertIntoCommunities();

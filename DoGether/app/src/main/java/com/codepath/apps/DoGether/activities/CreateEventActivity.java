@@ -11,6 +11,11 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.codepath.apps.DoGether.R;
+import com.parse.ParseAnalytics;
+import com.parse.ParseInstallation;
+import com.parse.ParsePush;
+
+import java.util.LinkedList;
 
 public class CreateEventActivity extends ActionBarActivity {
 
@@ -24,10 +29,16 @@ public class CreateEventActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
         setUpViews();
+        ParseInstallation.getCurrentInstallation().saveInBackground();
+        ParsePush.subscribeInBackground("Giants");
+        ParseAnalytics.trackAppOpenedInBackground(getIntent());
+
+
         broadcastEvent.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
                 Toast.makeText(CreateEventActivity.this, "HELLO", Toast.LENGTH_LONG).show();
+                broadcast();
 
                 //Form Event Text
 
@@ -38,6 +49,16 @@ public class CreateEventActivity extends ActionBarActivity {
                 //Go to CommunityView activity
             }
         });
+    }
+
+    public void broadcast(){
+        LinkedList<String> channels = new LinkedList<String>();
+        //channels.add("Giants");
+        channels.add("Giants");
+        ParsePush push = new ParsePush();
+        push.setChannels(channels); // Notice we use setChannels not setChannel
+        push.setMessage("The Giants won against the Mets 2-3.");
+        push.sendInBackground();
     }
 
 
