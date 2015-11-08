@@ -1,16 +1,14 @@
-package com.codepath.apps.DoGether;
+package com.codepath.apps.DoGether.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
+import com.codepath.apps.DoGether.LocalModels.LocalSubscription;
+import com.codepath.apps.DoGether.R;
+import com.codepath.apps.DoGether.TwitterClient;
 import com.codepath.oauth.OAuthLoginActionBarActivity;
-import com.parse.LogInCallback;
-import com.parse.ParseException;
-import com.parse.ParseTwitterUtils;
-import com.parse.ParseUser;
 
 public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 
@@ -33,8 +31,13 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 	// i.e Display application "homepage"
 	@Override
 	public void onLoginSuccess() {
-		Intent i = new Intent(this, ProfileActivity.class);
-		startActivity(i);
+		if (LocalSubscription.getAll().length > 0) {
+			Intent i = new Intent(this, ProfileActivity.class);
+			startActivity(i);
+		} else {
+			Intent i = new Intent(this, LandingActivity.class);
+			startActivity(i);
+		}
 	}
 
 	// OAuth authentication flow failed, handle the error

@@ -1,8 +1,11 @@
-package com.codepath.apps.DoGether;
+package com.codepath.apps.DoGether.activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
+import com.codepath.apps.DoGether.R;
+import com.codepath.apps.DoGether.RestApplication;
+import com.codepath.apps.DoGether.TwitterClient;
 import com.codepath.apps.DoGether.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -17,7 +20,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_profile);
         client = RestApplication.getRestClient();
         client.getUserInfo(new JsonHttpResponseHandler() {
 
