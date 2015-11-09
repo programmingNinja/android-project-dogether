@@ -34,7 +34,7 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 	@Override
 	public void onLoginSuccess() {
 		Log.d("loginAct","loginAct onSuccess");
-
+		
 		if (LocalSubscription.getAll().length <= 0) {
 			Intent i = new Intent(this, ProfileActivity.class);
 			startActivity(i);

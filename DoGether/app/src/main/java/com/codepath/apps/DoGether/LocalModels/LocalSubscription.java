@@ -15,7 +15,9 @@ public class LocalSubscription extends SugarRecord<LocalSubscription> {
         this.objId = id;
     }
     public void saveLocalSubscription() {
-        this.save();
+        List<LocalSubscription> localSubscriptions = LocalSubscription.find(LocalSubscription.class, "obj_id = ?", this.objId);
+        if(localSubscriptions.size() <= 0)
+            this.save();
     }
 
     public String getById(String id) {

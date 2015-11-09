@@ -25,6 +25,7 @@ public class Subscription extends ParseObject {
 
         // save community ids which user subscribes to
         final Subscription sub = new Subscription();
+        System.out.println("userid=" + userId + "comid=" + communityId);
         sub.addAllUnique("community_ids", Arrays.asList(communityId));
         sub.saveInBackground();
 
@@ -34,7 +35,10 @@ public class Subscription extends ParseObject {
         query.getInBackground(userId, new GetCallback<User>() {
             public void done(User user, ParseException e) {
                 if (e == null) {
-                    user.setRelation(sub);
+                    ParseRelation relation = user.getRelation("subscriptions");
+                    System.out.println("relation="+relation.toString());
+                    relation.add(sub);
+                    user.saveInBackground();
                 } else {
                     // something went wrong
                 }
