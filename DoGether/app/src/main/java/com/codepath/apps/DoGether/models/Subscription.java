@@ -33,6 +33,12 @@ public class Subscription extends ParseObject {
             e.printStackTrace();
         }
 
+        // testing new database schema
+//        User u = User.getUser(userId);
+//        Community c = Community.getCommunityObj(communityId);
+//        u.setRelation(c);
+//        c.setUserRelation(u);
+
         /**
          * If we eliminate the Subscription table from parse and local altogether
          * ParseQuery<Community> query = new ParseQuery(Community.class)

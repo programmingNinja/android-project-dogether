@@ -117,7 +117,23 @@ public class User extends ParseObject {
             }
         });
     }
+    public static User getUser(String objectId) {
+        ParseQuery<User> queryForUser = ParseQuery.getQuery(User.class);
 
+        User u = new User();
+        try {
+            u =  queryForUser.get(objectId);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return u;
+    }
+
+    public void setRelation(Community community) {
+        ParseRelation relation = this.getRelation("comRelation");
+        relation.add(community);
+        this.saveInBackground();
+    }
     public void setRelation(Subscription subscription) {
 
         ParseRelation relation = this.getRelation("subscriptions");

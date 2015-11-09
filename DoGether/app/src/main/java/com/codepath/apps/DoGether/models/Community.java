@@ -1,5 +1,7 @@
 package com.codepath.apps.DoGether.models;
 
+import com.codepath.apps.DoGether.LocalModels.LocalEvent;
+import com.codepath.apps.DoGether.LocalModels.LocalUser;
 import com.parse.FindCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
@@ -44,26 +46,23 @@ public class Community extends ParseObject  {
         subscription.subscribe(userId, communityId);
     }
 
-    public void getCommunity(ParseRelation<Subscription> parseRelation) {
-        ParseQuery query = parseRelation.getQuery();
-        //execute the above query
+
+    public static Community getCommunityObj(String id) {
+        ParseQuery<Community> queryForCommunity = ParseQuery.getQuery(Community.class);
+
+        Community u = new Community();
+        try {
+            u =  queryForCommunity.get(id);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return u;
     }
 
-    public void getCommunity(String id) {
-        final ParseQuery<Community> query = ParseQuery.getQuery(Community.class);
-        query.whereEqualTo("objectId", id);
-        query.findInBackground(new FindCallback<Community>() {
-            public void done(List<Community> communityList, ParseException e) {
-                if (e == null) {
-                    // Access the array of results here
-                    //String firstItemId = itemList.get(0).getObjectId();
-                    //Toast.makeText(TodoItemsActivity.this, firstItemId, Toast.LENGTH_SHORT).show();
-                } else {
-                    //Log.d("item", "Error: " + e.getMessage());
-                    System.out.println("Error in saving "+e.getMessage());
-                }
-            }
-        });
+    public void setUserRelation(User u) {
+        ParseRelation relation = this.getRelation("userRelation");
+        relation.add(u);
+        this.saveInBackground();
     }
     public void saveCommunity() {
         try {

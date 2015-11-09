@@ -14,6 +14,7 @@ import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseACL;
 import com.parse.ParseObject;
+import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
 /*
@@ -51,7 +52,21 @@ public class RestApplication extends com.orm.SugarApp {
 
 		// community records added hence commenting out
 		//insertIntoCommunities();
-		LocalUser.deleteAll();
+		//LocalUser.deleteAll();
+
+		// testing new database schema
+//		User u = User.getUser(LocalUser.getUser());
+//		ParseRelation<Community> parseRelation1 = u.getRelation("comRelation");
+//		try {
+//			Community test = parseRelation1.getQuery().find().get(0);
+//			ParseRelation<User> userParseRelation = test.getRelation("userRelation");
+//			User t = userParseRelation.getQuery().find().get(0);
+//			System.out.println("community Test "+test.getString("name"));
+//			System.out.println("getting relation "+userParseRelation);
+//			System.out.println("user test " + t.getString("screen_name"));
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
 
 	}
 
