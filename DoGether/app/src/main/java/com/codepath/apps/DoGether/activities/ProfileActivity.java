@@ -133,7 +133,8 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
 
            //Update parse Channel for push notification
            ParseInstallation.getCurrentInstallation().saveInBackground();
-           ParsePush.subscribeInBackground(communityId[position]);
+           String channel = communityId[position];
+           ParsePush.subscribeInBackground(channel);
            ParseAnalytics.trackAppOpenedInBackground(getIntent());
 
            //System.out.println("selected object id of community" + communityId[position]);
