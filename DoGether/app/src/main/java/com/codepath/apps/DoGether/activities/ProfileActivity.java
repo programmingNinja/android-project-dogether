@@ -19,8 +19,11 @@ import com.codepath.apps.DoGether.models.Subscription;
 import com.codepath.apps.DoGether.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.parse.FindCallback;
+import com.parse.ParseAnalytics;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 
 import org.apache.http.Header;
@@ -29,7 +32,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-public class ProfileActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class ProfileActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener {
 
     private TwitterClient client;
     private User currentUser;
@@ -43,11 +46,11 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         Log.d("profileAct", "profileAct onCreate");
         setContentView(R.layout.activity_profile);
         instantiate();
-        btnSubscribe = (Button)findViewById(R.id.btnSubscribe);
-        btnSubscribe.setOnClickListener( new View.OnClickListener() {
+        communitiesSpinner.setOnItemSelectedListener(this);
+        btnSubscribe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                subscribe();
+                subscribe(communitiesSpinner.getSelectedItemPosition());
             }
         });
 
@@ -74,6 +77,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
 
     private void instantiate() {
         communitiesSpinner = (Spinner)findViewById(R.id.spinnerCommunities);
+        btnSubscribe = (Button)findViewById(R.id.btnSubscribe);
         populateSpinner();
     }
 
@@ -107,31 +111,45 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
 
     }
 
-    public void subscribe(){
+    public void subscribe(int position){
        if(communitiesSpinner.getSelectedItem() != null){
 
            //LocalUser localUser = new LocalUser();
            String objectId = LocalUser.getUser();
 
            // update local
-           LocalSubscription localSubscription = new LocalSubscription(communitiesSpinner.getSelectedItem().toString());
+           LocalSubscription localSubscription = new LocalSubscription(communityId[position]);
            localSubscription.saveLocalSubscription();
 
            //update parse DB
            Subscription subscription = new Subscription();
-           subscription.subscribe(objectId,communitiesSpinner.getSelectedItem().toString());
+           subscription.subscribe(objectId,communityId[position]);
 
            //Update parse Channel for push notification
+           ParseInstallation.getCurrentInstallation().saveInBackground();
+           ParsePush.subscribeInBackground(communityId[position]);
+           ParseAnalytics.trackAppOpenedInBackground(getIntent());
 
            //System.out.println("selected object id of community" + communityId[position]);
-           System.out.println("selected object id of user" + objectId);
+           System.out.println("selected object id of user " + objectId);
            // TODO: 11/8/15  move to a different activity here
 
        }
     }
 
     @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        System.out.println("profileAct onItemClick");
+        subscribe(position);
     }
 }

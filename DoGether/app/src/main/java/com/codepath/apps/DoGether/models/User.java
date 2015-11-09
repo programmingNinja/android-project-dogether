@@ -17,6 +17,7 @@ import com.parse.ParseClassName;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.Date;
 import java.util.List;
@@ -84,13 +85,24 @@ public class User extends ParseObject {
             public void done(List<User> itemList, ParseException e) {
                 if (e == null) {
                     if (itemList.size() <= 0) {
-                        u.saveInBackground();
+                        //u.saveInBackground();
+                        u.saveInBackground(new SaveCallback() {
+                            public void done(ParseException e) {
+                                if (e == null) {
+                                    if(LocalUser.getCount() <= 0) {
+                                        // set localUser
+                                        Log.d("User","objectid print");
+                                        System.out.println("objectid "+u.getObjectId());
+                                        LocalUser localUser = new LocalUser(u.getObjectId().toString());
+                                        localUser.save();
+                                        Log.d("user", "local user saved "+localUser.getId());
+                                    }
+                                } else {
+                                    //myObjectSaveDidNotSucceed();
+                                }
+                            }
+                        });
                         //System.out.println("saved user ");
-                        if(LocalUser.getCount() <= 0) {
-                            // set localUser
-                            LocalUser localUser = new LocalUser(itemList.get(0).getObjectId());
-                            localUser.saveLocalUser();
-                        }
 
                     }
 

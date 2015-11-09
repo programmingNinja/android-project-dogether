@@ -9,18 +9,19 @@ import java.util.List;
  */
 public class LocalUser extends SugarRecord<LocalUser> {
 
-    private static String id;
+    private String objId;
 
     public LocalUser() {}
     public LocalUser(String id) {
-        this.id = id;
+        this.objId = id;
     }
     public void saveLocalUser() {
         this.save();
     }
 
     public static String getUser() {
-        return LocalUser.findById(LocalUser.class, Long.parseLong(id)).id;
+        LocalUser localUser = LocalUser.findById(LocalUser.class, 1L);
+        return localUser.objId;
     }
 
     public static long getCount() {
