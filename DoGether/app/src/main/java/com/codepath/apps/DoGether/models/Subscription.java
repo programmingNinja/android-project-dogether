@@ -27,7 +27,11 @@ public class Subscription extends ParseObject {
         final Subscription sub = new Subscription();
         System.out.println("userid=" + userId + "comid=" + communityId);
         sub.addAllUnique("community_ids", Arrays.asList(communityId));
-        sub.saveInBackground();
+        try {
+            sub.save();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         // create relationship in the user table for this subscription
         ParseQuery<User> query = ParseQuery.getQuery(User.class);
