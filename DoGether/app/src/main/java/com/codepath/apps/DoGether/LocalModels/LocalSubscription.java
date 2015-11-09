@@ -24,6 +24,11 @@ public class LocalSubscription extends SugarRecord<LocalSubscription> {
         return LocalSubscription.findById(LocalSubscription.class, Long.parseLong(id)).objId;
     }
 
+    public static String getCommunity() {
+        LocalSubscription localSubscription = LocalSubscription.findById(LocalSubscription.class, 1L);
+        return localSubscription.objId;
+    }
+
     public static String[] getAll() {
         List<LocalSubscription> list = listAll(LocalSubscription.class);
         String[] result = new String[list.size()];
@@ -36,4 +41,9 @@ public class LocalSubscription extends SugarRecord<LocalSubscription> {
     public void deleteLocalSubscription(String id) {
         LocalSubscription.deleteAll(LocalSubscription.class, "id = ?", id);
     }
+
+    public static void deleteAll() {
+        LocalSubscription.deleteAll(LocalSubscription.class);
+    }
+
 }

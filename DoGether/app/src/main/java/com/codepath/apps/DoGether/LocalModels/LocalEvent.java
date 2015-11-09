@@ -1,5 +1,6 @@
 package com.codepath.apps.DoGether.LocalModels;
 
+import com.codepath.apps.DoGether.models.Event;
 import com.orm.SugarRecord;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public class LocalEvent extends SugarRecord<LocalEvent> {
     String objId;
 
     public LocalEvent() {}
-    LocalEvent(String id) {
+    public LocalEvent(String id) {
         this.objId = id;
     }
     public void saveLocalEvent() {
@@ -36,4 +37,7 @@ public class LocalEvent extends SugarRecord<LocalEvent> {
         LocalEvent.deleteAll(LocalEvent.class, "objId = ?", id);
     }
 
+    public static void deleteAll(){
+        LocalEvent.deleteAll(LocalEvent.class);
+    }
 }

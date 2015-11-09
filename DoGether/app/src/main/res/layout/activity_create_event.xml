@@ -30,7 +30,6 @@
             android:id="@+id/etEventExercise"
             android:textSize="20dp"
             android:layout_toRightOf="@id/tvEventExercise"
-            android:textIsSelectable="false"
             android:hint="@string/eventExercise"
             android:layout_marginLeft="10dp" />
     </LinearLayout>
@@ -58,7 +57,6 @@
             android:id="@+id/etEventType"
             android:textSize="20dp"
             android:layout_toRightOf="@id/tvEventExercise"
-            android:textIsSelectable="true"
             android:hint="@string/eventExerciseType"
             android:layout_marginLeft="10dp" />
     </LinearLayout>

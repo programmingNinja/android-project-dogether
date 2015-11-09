@@ -1,5 +1,6 @@
 package com.codepath.apps.DoGether.activities;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,8 +11,12 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.codepath.apps.DoGether.LocalModels.LocalSubscription;
+import com.codepath.apps.DoGether.LocalModels.LocalUser;
+import com.codepath.apps.DoGether.models.Event;
 import com.codepath.apps.DoGether.R;
 import com.parse.ParseAnalytics;
+import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParsePush;
 
@@ -23,41 +28,63 @@ public class CreateEventActivity extends ActionBarActivity {
     private EditText etExerciseType;
     private TimePicker timePicker;
     private Button broadcastEvent;
+    private String userId;
+    private String communityId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
         setUpViews();
-        ParseInstallation.getCurrentInstallation().saveInBackground();
-        ParsePush.subscribeInBackground("Giants");
-        ParseAnalytics.trackAppOpenedInBackground(getIntent());
-
-
+        communityId = LocalSubscription.getCommunity();
         broadcastEvent.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Perform action on click
-                Toast.makeText(CreateEventActivity.this, "HELLO", Toast.LENGTH_LONG).show();
-                broadcast();
-
+               Toast.makeText(CreateEventActivity.this, "HELLO", Toast.LENGTH_LONG).show();
                 //Form Event Text
-
+                String eventText = formEventText();
                 //Enter data to database
-
+                saveEventToParseDb(eventText);
                 //Enter data for Push Notification
-
-                //Go to CommunityView activity
+                broadcast(communityId,eventText.toString());
+                //Go to CommunityView
+                Intent i = new Intent(CreateEventActivity.this, LandingActivity.class);
+                startActivity(i);
             }
         });
     }
 
-    public void broadcast(){
-        ParsePush push = new ParsePush();
-        push.setChannel("Giants"); // Notice we use setChannels not setChannel
-        push.setMessage("The Giants won against the Mets 2-3.");
-        push.sendInBackground();
+    private void saveEventToParseDb(String eventText){
+        try{
+
+            Event event = new Event(eventText,communityId);
+            event.save();
+            event.setUserRelation();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
     }
 
+    private String formEventText(){
+        StringBuffer eventText = new StringBuffer();
+        eventText.append("Hi all, I am going to do"+" ");
+        eventText.append("workout:" +" ");
+        eventText.append(etExerciseEvent.getText().toString()+ " ");
+        eventText.append("type:" +" ");
+        eventText.append(etExerciseType.getText().toString() +" ");
+        eventText.append("at" +" ");
+        //using deprecated api to support lower version android devices
+        eventText.append(timePicker.getCurrentHour() + ":" + timePicker.getCurrentMinute());
+        return eventText.toString();
+    }
+
+    public void broadcast(String communityId, String eventText){
+        ParsePush push = new ParsePush();
+        push.setChannel(communityId); // Notice we use setChannels not setChannel
+        push.setMessage(eventText);
+        push.sendInBackground();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

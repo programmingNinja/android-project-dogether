@@ -1,5 +1,6 @@
 package com.codepath.apps.DoGether.models;
 
+import com.codepath.apps.DoGether.LocalModels.LocalEvent;
 import com.codepath.apps.DoGether.LocalModels.LocalUser;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
@@ -76,6 +77,8 @@ public class Event extends ParseObject {
             queryForEvent.getInBackground(this.getObjectId(), new GetCallback<Event>() {
                 public void done(Event event, ParseException e) {
                     if (e == null) {
+                        LocalEvent localEvent = new LocalEvent(event.getObjectId());
+                        localEvent.save();
                         ParseRelation relation = event.getRelation("fromUser");
                         System.out.println("relation=" + relation.toString());
                         relation.add(userFromParse);
