@@ -23,6 +23,17 @@ public class Event extends ParseObject {
     public Event(String text, String comId) {
         setCommunityId(comId);
         setText(text);
+
+        // needs to be tested, dont know if this will work. Alternative for setUserRelation method
+//        ParseRelation parseRelation = this.getRelation("fromUser");
+//        ParseQuery<User> queryForUser = ParseQuery.getQuery(User.class);
+//        User userFromParse = null;
+//        try {
+//            userFromParse = queryForUser.get(LocalUser.getUser());
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        parseRelation.add(userFromParse);
     }
 
     public void saveEvent() {
