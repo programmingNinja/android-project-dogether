@@ -33,6 +33,12 @@ public class Subscription extends ParseObject {
             e.printStackTrace();
         }
 
+        /**
+         * If we eliminate the Subscription table from parse and local altogether
+         * ParseQuery<Community> query = new ParseQuery(Community.class)
+         * Community com = query.get(communityId);
+         */
+
         // create relationship in the user table for this subscription
         ParseQuery<User> query = ParseQuery.getQuery(User.class);
         // Specify the object id
@@ -43,6 +49,13 @@ public class Subscription extends ParseObject {
                     System.out.println("relation="+relation.toString());
                     relation.add(sub);
                     user.saveInBackground();
+
+                    /**
+                     * If we eliminate the Subscription table from parse and local altogether
+                     * ParseRelation relation = user.getRelation("subscriptions");
+                     * relation.add(com);
+                     * user.saveInBackground();
+                     */
                 } else {
                     // something went wrong
                 }
