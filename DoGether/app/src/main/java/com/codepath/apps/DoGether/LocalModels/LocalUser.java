@@ -28,5 +28,9 @@ public class LocalUser extends SugarRecord<LocalUser> {
         return LocalUser.count(LocalUser.class,"",null);
     }
 
+    public static void deleteAll() {
+        LocalUser.deleteAll(LocalUser.class);
+    }
+
 
 }

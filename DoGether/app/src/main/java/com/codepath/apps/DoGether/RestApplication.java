@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
+import com.codepath.apps.DoGether.LocalModels.LocalUser;
 import com.codepath.apps.DoGether.models.Community;
 import com.codepath.apps.DoGether.models.Event;
 import com.codepath.apps.DoGether.models.Subscription;
@@ -33,6 +34,7 @@ public class RestApplication extends com.orm.SugarApp {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+
 		Log.d("restApp", "RestApp onCreate");
 		RestApplication.context = this;
 		//Parse.enableLocalDatastore(this);
@@ -49,6 +51,7 @@ public class RestApplication extends com.orm.SugarApp {
 
 		// community records added hence commenting out
 		//insertIntoCommunities();
+		LocalUser.deleteAll();
 
 	}
 
