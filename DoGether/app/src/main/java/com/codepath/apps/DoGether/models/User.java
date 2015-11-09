@@ -134,18 +134,5 @@ public class User extends ParseObject {
         relation.add(community);
         this.saveInBackground();
     }
-    public void setRelation(Subscription subscription) {
-
-        ParseRelation relation = this.getRelation("subscriptions");
-        relation.add(subscription);
-        this.saveInBackground();
-    }
-
-    public ParseRelation<Subscription> getSubscriptions() {
-        ParseRelation relation = this.getRelation("subscriptions");
-        return relation;
-    }
-
-
 
 }

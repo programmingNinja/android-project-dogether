@@ -40,7 +40,6 @@ public class RestApplication extends com.orm.SugarApp {
 		RestApplication.context = this;
 		//Parse.enableLocalDatastore(this);
 		ParseObject.registerSubclass(User.class);
-		ParseObject.registerSubclass(Subscription.class);
 		ParseObject.registerSubclass(Event.class);
 		ParseObject.registerSubclass(Community.class);
 		Parse.initialize(this, YOUR_APPLICATION_ID, YOUR_CLIENT_KEY);
@@ -55,18 +54,18 @@ public class RestApplication extends com.orm.SugarApp {
 		//LocalUser.deleteAll();
 
 		// testing new database schema
-//		User u = User.getUser(LocalUser.getUser());
-//		ParseRelation<Community> parseRelation1 = u.getRelation("comRelation");
-//		try {
-//			Community test = parseRelation1.getQuery().find().get(0);
-//			ParseRelation<User> userParseRelation = test.getRelation("userRelation");
-//			User t = userParseRelation.getQuery().find().get(0);
-//			System.out.println("community Test "+test.getString("name"));
-//			System.out.println("getting relation "+userParseRelation);
-//			System.out.println("user test " + t.getString("screen_name"));
-//		} catch (ParseException e) {
-//			e.printStackTrace();
-//		}
+		User u = User.getUser(LocalUser.getUser());
+		ParseRelation<Community> parseRelation1 = u.getRelation("comRelation");
+		try {
+			Community test = parseRelation1.getQuery().find().get(0);
+			ParseRelation<User> userParseRelation = test.getRelation("userRelation");
+			User t = userParseRelation.getQuery().find().get(0);
+			System.out.println("community Test "+test.getString("name"));
+			System.out.println("getting relation "+userParseRelation);
+			System.out.println("user test " + t.getString("screen_name"));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 
 	}
 

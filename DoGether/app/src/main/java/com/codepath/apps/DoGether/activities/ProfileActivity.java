@@ -118,18 +118,8 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
            //LocalUser localUser = new LocalUser();
            String objectId = LocalUser.getUser();
 
-           /* If we eliminate the Subscription table from parse and local altogether
-              and this block will be deleted
-           ======================================================================================
-            */
-           // update local
-           LocalSubscription localSubscription = new LocalSubscription(communityId[position]);
-           localSubscription.saveLocalSubscription();
-
-           //update parse DB
            Subscription subscription = new Subscription();
            subscription.subscribe(objectId,communityId[position]);
-           /*====================================================================================*/
 
            //Update parse Channel for push notification
            ParseInstallation.getCurrentInstallation().saveInBackground();
