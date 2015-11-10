@@ -33,17 +33,13 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 	// i.e Display application "homepage"
 	@Override
 	public void onLoginSuccess() {
-		Log.d("loginAct", "loginAct onSuccess");
-		Intent i = new Intent(this, ProfileActivity.class);
-		startActivity(i);
-
-		/*if (LocalSubscription.getAll().length <= 0) {
+	    if (LocalSubscription.getAll().length <= 0) {
 			Intent i = new Intent(this, ProfileActivity.class);
 			startActivity(i);
 		} else {
 			Intent i = new Intent(this, LandingActivity.class);
 			startActivity(i);
-		}*/
+		}
 
 	}
 
