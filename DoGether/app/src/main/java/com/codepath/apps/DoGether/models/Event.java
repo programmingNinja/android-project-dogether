@@ -1,5 +1,7 @@
 package com.codepath.apps.DoGether.models;
 
+import android.util.Log;
+
 import com.codepath.apps.DoGether.LocalModels.LocalEvent;
 import com.codepath.apps.DoGether.LocalModels.LocalUser;
 import com.parse.FindCallback;
@@ -80,7 +82,7 @@ public class Event extends ParseObject {
                         LocalEvent localEvent = new LocalEvent(event.getObjectId());
                         localEvent.save();
                         ParseRelation relation = event.getRelation("fromUser");
-                        System.out.println("relation=" + relation.toString());
+                        Log.i("Event:", "relation=" + relation.toString());
                         relation.add(userFromParse);
                         event.saveInBackground();
                     } else {

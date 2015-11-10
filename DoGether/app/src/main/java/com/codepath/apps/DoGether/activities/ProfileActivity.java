@@ -69,7 +69,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
-                System.out.println("FAILED: " + errorResponse);
+                Log.e("FAILED: " , errorResponse.toString());
             }
         });
     }
@@ -87,25 +87,24 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> communityList, ParseException e) {
                 if (e == null) {
-                    Log.d("community", "Retrieved " + communityList.size() + " communities");
+                    Log.d("profileAct","community Retrieved " + communityList.size() + " communities");
                     communityName = new String[communityList.size()];
                     communityId = new String[communityList.size()];
                     int i=0;
                     for(ParseObject pO : communityList) {
                         communityName[i] = pO.getString("name");
                         communityId[i] = pO.getObjectId();
-                        System.out.println("com name "+pO.getString("name"));
+                        Log.i("profileAct","com name "+pO.getString("name"));
                         i++;
                     }
-
                     ArrayAdapter<String> spinnerAdapter= new ArrayAdapter<String>(ProfileActivity.this, R.layout.all_community, communityName);
                     spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinnerAdapter.notifyDataSetChanged();
                     communitiesSpinner.setAdapter(spinnerAdapter);
-                    Log.d("profileAct", "getting out of populate spinner");
+                    Log.i("profileAct", "getting out of populate spinner");
 
                 } else {
-                    Log.d("community", "Error: " + e.getMessage());
+                    Log.d("profileAct", "Community Error: " + e.getMessage());
                 }
             }
         });
@@ -128,7 +127,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
            ParseAnalytics.trackAppOpenedInBackground(getIntent());
 
            //System.out.println("selected object id of community" + communityId[position]);
-           System.out.println("selected object id of user " + objectId);
+           Log.i("profileAct","objectId of User " + objectId.toString());
            // TODO: 11/8/15  move to a different activity here
 
        }
@@ -146,7 +145,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        System.out.println("profileAct onItemClick");
+        Log.i("profileAct", "onItemClick");
         subscribe(position);
     }
 }

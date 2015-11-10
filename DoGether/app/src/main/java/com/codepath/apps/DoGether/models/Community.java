@@ -1,5 +1,6 @@
 package com.codepath.apps.DoGether.models;
 
+import com.activeandroid.util.Log;
 import com.codepath.apps.DoGether.LocalModels.LocalEvent;
 import com.codepath.apps.DoGether.LocalModels.LocalUser;
 import com.parse.FindCallback;
@@ -9,7 +10,9 @@ import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
+import com.parse.SaveCallback;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -71,4 +74,21 @@ public class Community extends ParseObject  {
             e.printStackTrace();
         }
     }
+
+    // since there is a callback copy paste the definition where required.
+    public void getAllUsers(String comId) {
+    Community currentCom = Community.getCommunityObj(comId);
+    ParseRelation<User> communityParseRelation = currentCom.getRelation("userRelation");
+    communityParseRelation.getQuery().findInBackground(new FindCallback<User>() {
+       public void done(List<User> results, ParseException e) {
+            if (e == null) {
+                // access your user list here
+
+            } else {
+                // results have all the developer objects in the Icon
+            }
+        }
+    });
+
+   }
 }

@@ -31,7 +31,7 @@ public class TwitterClient extends OAuthBaseClient {
 
 	public TwitterClient(Context context) {
 		super(context, REST_API_CLASS, REST_URL, REST_CONSUMER_KEY, REST_CONSUMER_SECRET, REST_CALLBACK_URL);
-		Log.d("TwitterClient", "TwitterClien Construcotr");
+		Log.d("TwitterClient", "TwitterClient Constructor");
 		this.clearAccessToken();
 	}
 

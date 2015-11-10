@@ -61,7 +61,7 @@ public class User extends ParseObject {
     }
     public static User fromJson(JSONObject jsonObject) {
 
-        android.util.Log.d("User", "User FromJSON");
+        Log.d("User", "User FromJSON");
 
         try {
             User u = new User();
@@ -91,11 +91,11 @@ public class User extends ParseObject {
                                 if (e == null) {
                                     if(LocalUser.getCount() <= 0) {
                                         // set localUser
-                                        Log.d("User","objectid print");
-                                        System.out.println("objectid "+u.getObjectId());
+                                        Log.i("User","objectid print");
+                                        Log.i("User:","objectid "+u.getObjectId());
                                         LocalUser localUser = new LocalUser(u.getObjectId().toString());
                                         localUser.save();
-                                        Log.d("user", "local user saved "+localUser.getId());
+                                        Log.i("User", "local user saved "+localUser.getId());
                                     }
                                 } else {
                                     //myObjectSaveDidNotSucceed();
@@ -112,7 +112,7 @@ public class User extends ParseObject {
                     //Toast.makeText(TodoItemsActivity.this, firstItemId, Toast.LENGTH_SHORT).show();
                 } else {
                     //Log.d("item", "Error: " + e.getMessage());
-                    System.out.println("Error in saving "+e.getMessage());
+                    Log.e("User","Error in saving "+e.getMessage());
                 }
             }
         });
