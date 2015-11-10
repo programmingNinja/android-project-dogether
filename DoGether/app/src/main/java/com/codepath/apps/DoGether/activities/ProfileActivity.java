@@ -129,7 +129,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
            ParseInstallation.getCurrentInstallation().saveInBackground();
            String channel = communityId[position];
            Log.d("CHANNEL",channel);
-           ParsePush.subscribeInBackground(channel);
+           ParsePush.subscribeInBackground(objectId);
            ParseAnalytics.trackAppOpenedInBackground(getIntent());
 
            //System.out.println("selected object id of community" + communityId[position]);
