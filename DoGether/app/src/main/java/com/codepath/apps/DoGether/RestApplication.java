@@ -54,9 +54,9 @@ public class RestApplication extends com.orm.SugarApp {
 
 		// community records added hence commenting out
 		//insertIntoCommunities();
-		LocalUser.deleteAll();
-        LocalSubscription.deleteAll();
-        LocalEvent.deleteAll();
+		//LocalUser.deleteAll();
+        //LocalSubscription.deleteAll();
+        //LocalEvent.deleteAll();
 
 		// testing new database schema
         /*
