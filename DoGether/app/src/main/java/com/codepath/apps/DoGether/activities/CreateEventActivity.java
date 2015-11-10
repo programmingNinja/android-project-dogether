@@ -57,7 +57,7 @@ public class CreateEventActivity extends ActionBarActivity {
         try{
 
             Event event = new Event(eventText,communityId);
-            event.save();
+            event.saveEvent();
             event.setUserRelation();
         }
         catch(Exception e){

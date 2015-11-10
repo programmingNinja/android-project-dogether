@@ -1,5 +1,6 @@
 package com.codepath.apps.DoGether.activities;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -118,18 +119,26 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
            //LocalUser localUser = new LocalUser();
            String objectId = LocalUser.getUser();
 
+           //Saving Local subscription
+           LocalSubscription localSubscription = new LocalSubscription(communityId[position]);
+           localSubscription.saveLocalSubscription();
+
            Subscription subscription = new Subscription();
            subscription.subscribe(objectId,communityId[position]);
 
            //Update parse Channel for push notification
            ParseInstallation.getCurrentInstallation().saveInBackground();
            String channel = communityId[position];
+           Log.d("CHANNEL",channel);
            ParsePush.subscribeInBackground(channel);
            ParseAnalytics.trackAppOpenedInBackground(getIntent());
 
            //System.out.println("selected object id of community" + communityId[position]);
            System.out.println("selected object id of user " + objectId);
            // TODO: 11/8/15  move to a different activity here
+
+           Intent i = new Intent(this, LandingActivity.class);
+           startActivity(i);
 
        }
     }
