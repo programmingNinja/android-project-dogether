@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
+import com.codepath.apps.DoGether.LocalModels.LocalEvent;
+import com.codepath.apps.DoGether.LocalModels.LocalSubscription;
 import com.codepath.apps.DoGether.LocalModels.LocalUser;
 import com.codepath.apps.DoGether.models.Community;
 import com.codepath.apps.DoGether.models.Event;
@@ -46,12 +48,15 @@ public class RestApplication extends com.orm.SugarApp {
         ParseUser.enableAutomaticUser();
         ParseACL defaultACL = new ParseACL();
         // Optionally enable public read access.
-        // defaultACL.setPublicReadAccess(true);
+        defaultACL.setPublicReadAccess(true);
+
         ParseACL.setDefaultACL(defaultACL, true);
 
 		// community records added hence commenting out
 		//insertIntoCommunities();
 		//LocalUser.deleteAll();
+        //LocalSubscription.deleteAll();
+        //LocalEvent.deleteAll();
 
 		// testing new database schema
 //		User u = User.getUser(LocalUser.getUser());

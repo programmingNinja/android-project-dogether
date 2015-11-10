@@ -26,7 +26,6 @@ public class Community extends ParseObject  {
 
 
     public Community(String name, ParseGeoPoint location) {
-
         setName(name);
         setMemberCount(0);
         setLocation(location);
