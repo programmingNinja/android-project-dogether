@@ -3,6 +3,7 @@ package com.codepath.apps.DoGether.activities;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,24 +47,9 @@ public class CreateEventActivity extends ActionBarActivity {
         setUpViews();
         communityId = LocalSubscription.getCommunity();
         userId = LocalUser.getUser();
-        getAllUsers(communityId);
-
         broadcastEvent.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
-                if(userList !=null && userList.size()>0) {
-                    Toast.makeText(CreateEventActivity.this, "HELLO", Toast.LENGTH_LONG).show();
-                    //Form Event Text
-                    String eventText = formEventText();
-                    //Enter data to database
-                    saveEventToParseDb(eventText);
-                    //Enter data for Push Notification
-                    broadcast(eventText.toString());
-                    //Go to CommunityView
-                    Intent i = new Intent(CreateEventActivity.this, LandingActivity.class);
-                    startActivity(i);
-                }
-                
+                broadcastEventToUsers(communityId);
             }
         });
 
@@ -77,20 +63,30 @@ public class CreateEventActivity extends ActionBarActivity {
         broadcastEvent.setEnabled(false);
     }
 
-    public void getAllUsers(String comId) {
+    public void broadcastEventToUsers (String comId) {
         Community currentCom = Community.getCommunityObj(comId);
         ParseRelation<User> communityParseRelation = currentCom.getRelation("userRelation");
         communityParseRelation.getQuery().findInBackground(new FindCallback<User>() {
             public void done(List<User> results, ParseException e) {
                 if (e == null) {
-                    broadcastEvent.setEnabled(true);
                     userList = new ArrayList<User>();
                     for(User user : results){
-                        if(userId.equals(user.getObjectId().toString())){
-                            userList.remove(user);
+                        if(!userId.equals(user.getObjectId().toString())){
+                            userList.add(user);
                         }
                     }
-
+                    if(userList !=null && userList.size()>0) {
+                        Toast.makeText(CreateEventActivity.this, "HELLO", Toast.LENGTH_LONG).show();
+                        //Form Event Text
+                        String eventText = formEventText();
+                        //Enter data to database
+                        saveEventToParseDb(eventText);
+                        //Enter data for Push Notification
+                        broadcast(eventText.toString());
+                        //Go to CommunityView
+                        Intent i = new Intent(CreateEventActivity.this, LandingActivity.class);
+                        startActivity(i);
+                    }
                     // access your user list here
 
                 } else {
@@ -112,7 +108,6 @@ public class CreateEventActivity extends ActionBarActivity {
 
     private void saveEventToParseDb(String eventText){
         try{
-
             Event event = new Event(eventText,communityId);
             event.saveEvent();
             event.setUserRelation();
