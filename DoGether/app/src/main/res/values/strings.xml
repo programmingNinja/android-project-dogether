@@ -16,4 +16,29 @@
     <string name="action_settings">Settings</string>
     <string name="not_subscribed_label">Please subscribe to atleast one community to move forward</string>
 
+    <string-array name="Exercise">
+        <item>Upper body workout</item>
+        <item>Lower body workout</item>
+        <item>Cardio</item>
+        <item>Yoga</item>
+    </string-array>
+
+    <string-array name="ubw">
+        <item>Chest</item>
+        <item>Shoulder</item>
+        <item>Biceps</item>
+        <item>Triceps</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="lbw">
+        <item>Leg press</item>
+        <item>Dead lift</item>
+        <item>Leg curl</item>
+        <item>Barbell Squat</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="other">
+        <item>Other</item>
+    </string-array>
+
 </resources>
