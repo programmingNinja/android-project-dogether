@@ -1,10 +1,20 @@
 package com.codepath.apps.DoGether.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,6 +26,7 @@ import com.codepath.apps.DoGether.LocalModels.LocalUser;
 import com.codepath.apps.DoGether.R;
 import com.codepath.apps.DoGether.RestApplication;
 import com.codepath.apps.DoGether.TwitterClient;
+import com.codepath.apps.DoGether.helpers.SimpleProgressDialog;
 import com.codepath.apps.DoGether.models.Subscription;
 import com.codepath.apps.DoGether.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -42,11 +53,42 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     private String[] communityName;
     private String[] communityId;
     private Button btnSubscribe;
+
+    Toolbar toolbar;
+    DrawerLayout dlDrawer;
+    ActionBarDrawerToggle drawerToggle;
+    NavigationView nvDrawer;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("profileAct", "profileAct onCreate");
         setContentView(R.layout.activity_profile);
+
+        // Find the toolbar view inside the activity layout
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        // Make sure the toolbar exists in the activity and is not null
+
+
+        // Find our drawer view
+        dlDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerToggle = setupDrawerToggle();
+
+        // Tie DrawerLayout events to the ActionBarToggle
+        dlDrawer.setDrawerListener(drawerToggle);
+
+        // Find our drawer view
+        nvDrawer = (NavigationView) findViewById(R.id.nvView);
+        // Setup drawer view
+        setupDrawerContent(nvDrawer);
+        nvDrawer.getMenu().getItem(0).setChecked(true);
+        setSupportActionBar(toolbar);
+
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        SimpleProgressDialog dialog = SimpleProgressDialog.build(this, "loading...");
+        dialog.show();
+        Log.d("profileAct", "profileAct onCreate");
         instantiate();
         communitiesSpinner.setOnItemSelectedListener(this);
         btnSubscribe.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +115,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                 Log.e("FAILED: " , errorResponse.toString());
             }
         });
+        dialog.dismiss();
     }
 
 
@@ -88,17 +131,17 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> communityList, ParseException e) {
                 if (e == null) {
-                    Log.d("profileAct","community Retrieved " + communityList.size() + " communities");
+                    Log.d("profileAct", "community Retrieved " + communityList.size() + " communities");
                     communityName = new String[communityList.size()];
                     communityId = new String[communityList.size()];
-                    int i=0;
-                    for(ParseObject pO : communityList) {
+                    int i = 0;
+                    for (ParseObject pO : communityList) {
                         communityName[i] = pO.getString("name");
                         communityId[i] = pO.getObjectId();
-                        Log.i("profileAct","com name "+pO.getString("name"));
+                        Log.i("profileAct", "com name " + pO.getString("name"));
                         i++;
                     }
-                    ArrayAdapter<String> spinnerAdapter= new ArrayAdapter<String>(ProfileActivity.this, R.layout.all_community, communityName);
+                    ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(ProfileActivity.this, R.layout.all_community, communityName);
                     spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinnerAdapter.notifyDataSetChanged();
                     communitiesSpinner.setAdapter(spinnerAdapter);
@@ -157,4 +200,83 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         Log.i("profileAct", "onItemClick");
         subscribe(position);
     }
+
+    private ActionBarDrawerToggle setupDrawerToggle() {
+        return new ActionBarDrawerToggle(this, dlDrawer, toolbar, R.string.drawer_open,  R.string.drawer_close) {
+            public void onDrawerClosed(View view) {
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                nvDrawer.bringToFront();
+                dlDrawer.requestLayout();
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+    }
+
+    private void setupDrawerContent(NavigationView navigationView) {
+        System.out.println("outer item clicked");
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        System.out.println("item clicked");
+                        selectDrawerItem(menuItem);
+                        return true;
+                    }
+                });
+    }
+
+    public void selectDrawerItem(MenuItem menuItem) {
+        // Create a new fragment and specify the planet to show based on
+        // position
+        switch(menuItem.getItemId()) {
+            case R.id.my_profile:
+                startActivity(new Intent(this, ProfileActivity.class));
+                break;
+            case R.id.subscribed_community:
+                System.out.println("subscribed clicked");
+                startActivity(new Intent(this, CommunityActivity.class));
+                break;
+            case R.id.search_community:
+                System.out.println("search clicked");
+                startActivity(new Intent(this, LandingActivity.class));
+                break;
+            case R.id.logout:
+                client.logout();
+                break;
+            default:
+                startActivity(new Intent(this, ProfileActivity.class));
+        }
+        // Highlight the selected item, update the title, and close the drawer
+        menuItem.setChecked(true);
+        setTitle(menuItem.getTitle());
+        DrawerLayout mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawer.closeDrawers();
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggles
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }
