@@ -7,8 +7,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -25,15 +28,18 @@ import com.parse.ParseInstallation;
 import com.parse.ParsePush;
 import com.parse.ParseRelation;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.nio.channels.Channel;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CreateEventActivity extends ActionBarActivity {
+public class CreateEventActivity extends ActionBarActivity  {
 
-    private EditText etExerciseEvent;
-    private EditText etExerciseType;
+    private Spinner spEventExercise;
+    private Spinner spEventExerciseType;
     private TimePicker timePicker;
     private Button broadcastEvent;
     private String userId;
@@ -52,15 +58,48 @@ public class CreateEventActivity extends ActionBarActivity {
                 broadcastEventToUsers(communityId);
             }
         });
+        spEventExercise.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (spEventExercise.getSelectedItem().equals("Upper body workout")) {
+                    ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(CreateEventActivity.this, R.array.ubw, android.R.layout.simple_spinner_item);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spEventExerciseType.setAdapter(adapter);
+
+                }
+                else if (spEventExercise.getSelectedItem().equals("Lower body workout")) {
+                    ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(CreateEventActivity.this, R.array.lbw, android.R.layout.simple_spinner_item);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spEventExerciseType.setAdapter(adapter);
+
+                }
+                else if  (spEventExercise.getSelectedItem().equals("Cardio")) {
+                    ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(CreateEventActivity.this, R.array.other, android.R.layout.simple_spinner_item);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spEventExerciseType.setAdapter(adapter);
+
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     public void setUpViews(){
-        etExerciseEvent = (EditText)findViewById(R.id.etEventExercise);
-        etExerciseType = (EditText)findViewById(R.id.etEventType);
+        spEventExercise = (Spinner)findViewById(R.id.spEventExercise);
+        spEventExerciseType =(Spinner)findViewById(R.id.spEventExerciseType);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.Exercise, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spEventExercise.setAdapter(adapter);
         timePicker = (TimePicker)findViewById(R.id.timePicker);
         broadcastEvent = (Button)findViewById(R.id.btnBroadcast);
-        broadcastEvent.setEnabled(false);
+        // Apply the adapter to the spinner
+
     }
 
     public void broadcastEventToUsers (String comId) {
@@ -122,11 +161,10 @@ public class CreateEventActivity extends ActionBarActivity {
         StringBuffer eventText = new StringBuffer();
         eventText.append("Hi all, I am going to do"+" ");
         eventText.append("workout:" +" ");
-        eventText.append(etExerciseEvent.getText().toString()+ " ");
+        eventText.append(spEventExercise.getSelectedItem().toString()+ " ");
         eventText.append("type:" +" ");
-        eventText.append(etExerciseType.getText().toString() +" ");
+        eventText.append(spEventExerciseType.getSelectedItem().toString() +" ");
         eventText.append("at" +" ");
-        //using deprecated api to support lower version android devices
         eventText.append(timePicker.getCurrentHour() + ":" + timePicker.getCurrentMinute());
         return eventText.toString();
     }
@@ -137,9 +175,25 @@ public class CreateEventActivity extends ActionBarActivity {
         for(User user : userList){
             channels.add(user.getObjectId().toString());
         }
+        JSONObject data = getJSONDataMessage();
+        push.setData(data);
         push.setChannels(channels); // Notice we use setChannels not setChannel
         push.setMessage(eventText);
         push.sendInBackground();
+    }
+
+    private JSONObject getJSONDataMessage()
+    {
+        try
+        {
+            JSONObject data = new JSONObject();
+            data.put("userId",userId );
+            return data;
+        }
+        catch(JSONException x)
+        {
+            throw new RuntimeException("Something wrong with JSON", x);
+        }
     }
 
     @Override
