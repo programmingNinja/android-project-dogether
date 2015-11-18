@@ -1,23 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:descendantFocusability="beforeDescendants"
+    android:background="@drawable/card_background_selector"
+    android:layout_marginLeft="5dp"
+    >
 
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/linelay1"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:descendantFocusability="afterDescendants">
 
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:id="@+id/ivComUserPhoto"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/ic_launcher"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"/>
 
          <TextView
             android:layout_width="wrap_content"
@@ -28,16 +35,20 @@
             android:textSize="18dp"
              android:layout_marginLeft="10dp" />
 
+
     </LinearLayout>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/eventText"
         android:id="@+id/tvComUserEvent"
         android:layout_below="@id/linelay1"
         android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="5dp"
         android:textColor="#292f33"
         android:textSize="16dp" />
+
 
 </RelativeLayout>

@@ -15,6 +15,12 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="not_subscribed_label">Please subscribe to atleast one community to move forward</string>
+    <string name="profile">My Profile</string>
+    <string name="community">Subscribed community</string>
+    <string name="search_nearby">Show nearby communities</string>
+    <string name="logout">Logout</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 
     <string-array name="Exercise">
         <item>Upper body workout</item>

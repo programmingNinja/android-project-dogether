@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+
+
+                <item
+                    android:icon="@drawable/ic_launcher1"
+                    android:title="@string/profile"
+                    android:id="@+id/my_profile"/>
+                <item
+                    android:icon="@drawable/ic_launcher1"
+                    android:title="@string/community"
+                    android:id="@+id/subscribed_community"/>
+
+                <item
+                    android:icon="@drawable/ic_launcher1"
+                    android:title="@string/search_nearby"
+                    android:id="@+id/search_community"/>
+                <item
+                    android:icon="@drawable/ic_launcher1"
+                    android:title="@string/logout"
+                    android:id="@+id/logout"/>
+
+
+    </group>
+</menu>
