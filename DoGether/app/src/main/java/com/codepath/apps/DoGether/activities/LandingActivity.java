@@ -181,7 +181,7 @@ public class LandingActivity extends AppCompatActivity {
         // position
         switch(menuItem.getItemId()) {
             case R.id.my_profile:
-                startActivity(new Intent(this, ProfileActivity.class));
+                startActivity(new Intent(this, MyProfileActivity.class));
                 break;
             case R.id.subscribed_community:
                 System.out.println("subscribed clicked");

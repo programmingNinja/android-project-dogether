@@ -12,6 +12,8 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -22,7 +24,9 @@ public class Event extends ParseObject {
 
     private String text;
 
-    public Event(){}
+    public Event() {
+    }
+
     public Event(String text, String comId) {
         setCommunityId(comId);
         setText(text);
@@ -99,5 +103,19 @@ public class Event extends ParseObject {
 
     public void setText(String text) {
         this.put("text", text);
+    }
+
+    public static List<Event> getEvents(String[] objectIds) {
+        ParseQuery<Event> query = ParseQuery.getQuery(Event.class);
+        query.orderByDescending("createdAt");
+        query.whereContainedIn("objectId", Arrays.asList(objectIds));
+        query.setLimit(20);
+        List<Event> events = new ArrayList<>();
+        try {
+            events = query.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return  events;
     }
 }
