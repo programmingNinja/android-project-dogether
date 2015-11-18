@@ -28,6 +28,9 @@ import com.parse.ParseInstallation;
 import com.parse.ParsePush;
 import com.parse.ParseRelation;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.nio.channels.Channel;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -158,11 +161,10 @@ public class CreateEventActivity extends ActionBarActivity  {
         StringBuffer eventText = new StringBuffer();
         eventText.append("Hi all, I am going to do"+" ");
         eventText.append("workout:" +" ");
-        //eventText.append(etExerciseEvent.getText().toString()+ " ");
+        eventText.append(spEventExercise.getSelectedItem().toString()+ " ");
         eventText.append("type:" +" ");
-        //eventText.append(etExerciseType.getText().toString() +" ");
+        eventText.append(spEventExerciseType.getSelectedItem().toString() +" ");
         eventText.append("at" +" ");
-        //using deprecated api to support lower version android devices
         eventText.append(timePicker.getCurrentHour() + ":" + timePicker.getCurrentMinute());
         return eventText.toString();
     }
@@ -173,9 +175,25 @@ public class CreateEventActivity extends ActionBarActivity  {
         for(User user : userList){
             channels.add(user.getObjectId().toString());
         }
+        JSONObject data = getJSONDataMessage();
+        push.setData(data);
         push.setChannels(channels); // Notice we use setChannels not setChannel
         push.setMessage(eventText);
         push.sendInBackground();
+    }
+
+    private JSONObject getJSONDataMessage()
+    {
+        try
+        {
+            JSONObject data = new JSONObject();
+            data.put("userId",userId );
+            return data;
+        }
+        catch(JSONException x)
+        {
+            throw new RuntimeException("Something wrong with JSON", x);
+        }
     }
 
     @Override
