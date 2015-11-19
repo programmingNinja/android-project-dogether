@@ -5,11 +5,15 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
+import android.widget.ImageView;
 
 import com.codepath.apps.DoGether.LocalModels.LocalEvent;
+import com.codepath.apps.DoGether.LocalModels.LocalUser;
 import com.codepath.apps.DoGether.R;
 import com.codepath.apps.DoGether.adapters.MyProfileAdapter;
 import com.codepath.apps.DoGether.models.Event;
+import com.codepath.apps.DoGether.models.User;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +23,7 @@ public class MyProfileActivity extends AppCompatActivity {
     RecyclerView rv;
     List<Event> events;
     MyProfileAdapter adapter;
+    ImageView profilePic;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +55,12 @@ public class MyProfileActivity extends AppCompatActivity {
 
         adapter.notifyDataSetChanged();
 
+        profilePic = (ImageView) findViewById(R.id.profilePic);
+        Picasso.with(this).
+                load(User.getProfilePicUrl(LocalUser.getUser())).
+                fit().
+                placeholder(R.drawable.abc_spinner_mtrl_am_alpha).
+                into(profilePic);
         //instantiate();
     }
 

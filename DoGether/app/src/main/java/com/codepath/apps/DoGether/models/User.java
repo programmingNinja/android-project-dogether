@@ -135,4 +135,9 @@ public class User extends ParseObject {
         this.saveInBackground();
     }
 
+    public static String getProfilePicUrl(String objId) {
+        User u = User.getUser(objId);
+        return u.getString("profile_image_url");
+    }
+
 }
