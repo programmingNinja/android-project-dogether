@@ -118,4 +118,20 @@ public class Event extends ParseObject {
         }
         return  events;
     }
+
+    public static Event getEvent(String objId) {
+        Event returnThis = new Event();
+        ParseQuery<Event> query = ParseQuery.getQuery(Event.class);
+        try {
+            returnThis = query.get(objId);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return returnThis;
+    }
+
+    public static void removeEvent(String objId) {
+
+        Event.getEvent(objId).deleteInBackground();
+    }
 }

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.codepath.apps.DoGether.LocalModels.LocalEvent;
 import com.codepath.apps.DoGether.LocalModels.LocalUser;
 import com.codepath.apps.DoGether.R;
 import com.codepath.apps.DoGether.activities.MyProfileActivity;
@@ -26,7 +27,7 @@ import java.util.List;
 /**
  * Created by rshah4 on 11/17/15.
  */
-public class MyProfileAdapter extends RecyclerView.Adapter<MyProfileAdapter.EventViewHolder> {
+public class MyProfileAdapter extends RecyclerView.Adapter<MyProfileAdapter.EventViewHolder> implements ItemTouchHelperAdapter {
 
     List<Event> events;
     private Activity mContext;
@@ -77,6 +78,30 @@ public class MyProfileAdapter extends RecyclerView.Adapter<MyProfileAdapter.Even
     @Override
     public int getItemCount() {
         return events.size();
+    }
+
+    @Override
+    public void onItemMove(int fromPosition, int toPosition) {
+
+    }
+
+    @Override
+    public void onItemDismiss(int position) {
+
+        Event toBeRemoved = events.get(position);
+        String objId = toBeRemoved.getObjectId();
+        // delete from parse
+        Event.removeEvent(objId);
+
+        // delete from local
+        LocalEvent.deleteLocalEvent(objId);
+
+        // delete from the list
+        events.remove(position);
+
+        // update adapter
+        notifyItemRemoved(position);
+
     }
 
     public static class EventViewHolder extends RecyclerView.ViewHolder {

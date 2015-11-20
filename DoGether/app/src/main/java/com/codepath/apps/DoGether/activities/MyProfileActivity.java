@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.widget.ImageView;
 
@@ -11,6 +12,7 @@ import com.codepath.apps.DoGether.LocalModels.LocalEvent;
 import com.codepath.apps.DoGether.LocalModels.LocalUser;
 import com.codepath.apps.DoGether.R;
 import com.codepath.apps.DoGether.adapters.MyProfileAdapter;
+import com.codepath.apps.DoGether.helpers.SimpleItemTouchHelperCallback;
 import com.codepath.apps.DoGether.models.Event;
 import com.codepath.apps.DoGether.models.User;
 import com.squareup.picasso.Picasso;
@@ -61,6 +63,11 @@ public class MyProfileActivity extends AppCompatActivity {
                 fit().
                 placeholder(R.drawable.abc_spinner_mtrl_am_alpha).
                 into(profilePic);
+
+        ItemTouchHelper.Callback callback =
+                new SimpleItemTouchHelperCallback(adapter);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(rv);
         //instantiate();
     }
 

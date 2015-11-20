@@ -33,8 +33,8 @@ public class LocalEvent extends SugarRecord<LocalEvent> {
         return result;
     }
 
-    public void deleteLocalEvent(String id) {
-        LocalEvent.deleteAll(LocalEvent.class, "objId = ?", id);
+    public static void deleteLocalEvent(String id) {
+        LocalEvent.deleteAll(LocalEvent.class, "obj_id = ?", id);
     }
 
     public static void deleteAll(){
