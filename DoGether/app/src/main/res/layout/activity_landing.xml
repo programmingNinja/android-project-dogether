@@ -4,8 +4,7 @@
     android:id="@+id/rlMainContent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.codepath.apps.DoGether.activities.ProfileActivity"
-    android:background="@drawable/notification_click_activity">
+    tools:context="com.codepath.apps.DoGether.activities.ProfileActivity">
 
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
