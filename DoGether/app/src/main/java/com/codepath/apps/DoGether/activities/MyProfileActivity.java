@@ -1,6 +1,7 @@
 package com.codepath.apps.DoGether.activities;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -95,6 +96,9 @@ public class MyProfileActivity extends AppCompatActivity implements AdapterView.
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
 
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("My Profile");
         // Find our drawer view
         dlDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerToggle = setupDrawerToggle();
@@ -107,8 +111,7 @@ public class MyProfileActivity extends AppCompatActivity implements AdapterView.
         // Setup drawer view
         setupDrawerContent(nvDrawer);
         nvDrawer.getMenu().getItem(0).setChecked(true);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("My Profile");
+
         client = RestApplication.getRestClient();
         //instantiate();
     }
@@ -182,6 +185,27 @@ public class MyProfileActivity extends AppCompatActivity implements AdapterView.
         setTitle(menuItem.getTitle());
         DrawerLayout mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawer.closeDrawers();
+    }
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggles
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 //    private void instantiate() {
