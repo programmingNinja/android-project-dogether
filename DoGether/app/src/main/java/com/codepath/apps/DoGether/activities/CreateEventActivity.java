@@ -3,10 +3,15 @@ package com.codepath.apps.DoGether.activities;
 import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,7 +47,7 @@ import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CreateEventActivity  extends FragmentActivity   {
+public class CreateEventActivity  extends AppCompatActivity {
 
     private Spinner spEventExercise;
     private Spinner spEventExerciseType;
@@ -51,6 +56,8 @@ public class CreateEventActivity  extends FragmentActivity   {
     private String userId;
     private String communityId;
     private List<User>userList;
+
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +120,11 @@ public class CreateEventActivity  extends FragmentActivity   {
         spEventExercise.setAdapter(adapter);
         timePicker = (TimePicker)findViewById(R.id.timePicker);
         broadcastEvent = (Button)findViewById(R.id.btnBroadcast);
+        // Find the toolbar view inside the activity layout
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Create Event");
+
         // Apply the adapter to the spinner
 
     }

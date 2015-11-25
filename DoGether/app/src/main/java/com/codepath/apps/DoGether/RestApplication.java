@@ -45,7 +45,7 @@ public class RestApplication extends com.orm.SugarApp {
 		ParseObject.registerSubclass(Event.class);
 		ParseObject.registerSubclass(Community.class);
 		Parse.initialize(this, YOUR_APPLICATION_ID, YOUR_CLIENT_KEY);
-        ParseUser.enableAutomaticUser();
+        //ParseUser.enableAutomaticUser();
         ParseACL defaultACL = new ParseACL();
         // Optionally enable public read access.
         defaultACL.setPublicReadAccess(true);
