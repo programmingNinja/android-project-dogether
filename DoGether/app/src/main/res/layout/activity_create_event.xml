@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.codepath.apps.DoGether.activities.CreateEventActivity"
@@ -22,23 +23,26 @@
         android:layout_height="wrap_content"
         android:text="@string/Exercise"
         android:id="@+id/tvEventExercise"
-        android:textSize="20dp"
+        android:textSize="16dp"
         android:textIsSelectable="false"
         android:textStyle="bold"
         android:textColor="#6533cc"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="80dp" />
-    <Spinner
+
+    <android.support.v7.widget.AppCompatSpinner
         android:layout_width="fill_parent"
-        android:layout_height="40dp"
+        android:layout_height="35dp"
         android:id="@+id/spEventExercise"
         android:textSize="20dp"
         android:layout_below="@id/tvEventExercise"
         android:spinnerMode="dropdown"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:background="#DCDCDC" />
+        android:dropDownSelector="@color/text"
+        style="@style/Widget.AppCompat.Spinner.Underlined"
+        app:backgroundTint="@color/text"/>
 
 
 
@@ -47,23 +51,25 @@
         android:layout_height="wrap_content"
         android:text="@string/type"
         android:id="@+id/tvEventType"
-        android:textSize="20dp"
+        android:textSize="16dp"
         android:textIsSelectable="true"
         android:textStyle="bold"
         android:textColor="#6533cc"
         android:layout_below="@id/spEventExercise"/>
-    <Spinner
+    <android.support.v7.widget.AppCompatSpinner
         android:layout_width="fill_parent"
-        android:layout_height="40dp"
+        android:layout_height="35dp"
         android:id="@+id/spEventExerciseType"
         android:textSize="20dp"
         android:layout_below="@+id/tvEventType"
         android:layout_alignParentStart="true"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:background="#DCDCDC"
         android:spinnerMode="dropdown"
-        android:backgroundTintMode="screen" />
+        style="@style/Widget.AppCompat.Spinner.Underlined"
+        app:backgroundTint="@color/text"
+        />
+
 
 
     <TextView
@@ -100,11 +106,12 @@
         android:clickable="true"
         android:touchscreenBlocksFocus="false"
         android:numbersTextColor="#ffffff"
-        android:headerBackground="#5298fc"
         android:scaleX="0.9"
         android:scaleY="0.9"
         android:amPmTextColor="@color/text"
         android:layout_below="@+id/tvEventTime"
-        android:layout_centerHorizontal="true" />
-</RelativeLayout>
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/background_spinner"/>
+
+    </RelativeLayout>
 </RelativeLayout>
