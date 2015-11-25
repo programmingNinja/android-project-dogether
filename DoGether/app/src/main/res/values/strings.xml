@@ -6,12 +6,12 @@
     <string name="username">Username</string>
     <string name="eventText">Event Text</string>
     <string name="title_activity_create_event">CreateEventActivity</string>
-    <string name="Exercise">Exercise</string>
-    <string name="type">Type</string>
+    <string name="Exercise">Select your exercise</string>
+    <string name="type">Select exercise type</string>
     <string name="eventExercise">Enter Exercise</string>
     <string name="eventExerciseType">Enter Exercise Type</string>
     <string name="eventTime">Pick YourTime</string>
-    <string name="broadcastEventButton">Broadcast event</string>
+    <string name="broadcastEventButton">Save Event</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="not_subscribed_label">Please subscribe to atleast one community to move forward</string>
@@ -28,7 +28,6 @@
         <item>Cardio</item>
         <item>Yoga</item>
     </string-array>
-
     <string-array name="ubw">
         <item>Chest</item>
         <item>Shoulder</item>
@@ -46,5 +45,8 @@
     <string-array name="other">
         <item>Other</item>
     </string-array>
+
+    <string name="title_activity_notification_click">NotificationClickActivity</string>
+    <string name="tvJoinMe">Join Me !</string>
 
 </resources>

@@ -1,6 +1,10 @@
 package com.codepath.apps.DoGether.activities;
 
+import android.app.Activity;
+import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,15 +32,17 @@ import com.parse.ParseInstallation;
 import com.parse.ParsePush;
 import com.parse.ParseRelation;
 
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.nio.channels.Channel;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CreateEventActivity extends ActionBarActivity  {
+public class CreateEventActivity  extends FragmentActivity   {
 
     private Spinner spEventExercise;
     private Spinner spEventExerciseType;
@@ -51,13 +57,22 @@ public class CreateEventActivity extends ActionBarActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
         setUpViews();
+        final Calendar calendar = Calendar.getInstance();
         communityId = LocalSubscription.getCommunity();
         userId = LocalUser.getUser();
         broadcastEvent.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                broadcastEventToUsers(communityId);
+                Snackbar.make(findViewById(android.R.id.content), "Do you want to broadcast ?", Snackbar.LENGTH_LONG).setAction("Broadcast", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        broadcastEventToUsers(communityId);
+                    }
+
+                }).show();
+
             }
         });
+
         spEventExercise.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
@@ -175,19 +190,21 @@ public class CreateEventActivity extends ActionBarActivity  {
         for(User user : userList){
             channels.add(user.getObjectId().toString());
         }
-        JSONObject data = getJSONDataMessage();
+        JSONObject data = getJSONDataMessage(eventText);
+
         push.setData(data);
         push.setChannels(channels); // Notice we use setChannels not setChannel
-        push.setMessage(eventText);
+        //push.setMessage(eventText);
         push.sendInBackground();
     }
 
-    private JSONObject getJSONDataMessage()
+    private JSONObject getJSONDataMessage(String eventText)
     {
         try
         {
             JSONObject data = new JSONObject();
             data.put("userId",userId );
+            data.put("alert",eventText);
             return data;
         }
         catch(JSONException x)
@@ -217,4 +234,5 @@ public class CreateEventActivity extends ActionBarActivity  {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

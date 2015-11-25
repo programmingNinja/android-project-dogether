@@ -29,6 +29,9 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,6 +81,7 @@ public class LandingActivity extends AppCompatActivity {
         setUpViews();
         getEventsForCommunity();
         dialog.dismiss();
+
     }
 
     public void setUpViews(){
