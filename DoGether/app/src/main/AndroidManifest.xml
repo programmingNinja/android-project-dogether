@@ -85,7 +85,7 @@
         <service android:name="com.parse.PushService" />
 
         <receiver
-            android:name="com.parse.ParsePushBroadcastReceiver"
+            android:name="com.codepath.apps.DoGether.helpers.NotificationProcessor"
             android:exported="false" >
             <intent-filter>
                 <action android:name="com.parse.push.intent.RECEIVE" />
@@ -106,6 +106,10 @@
         </receiver>
 
         <activity android:name=".activities.MyProfileActivity" >
+        </activity>
+        <activity
+            android:name=".activities.NotificationClickActivity"
+            android:label="@string/title_activity_notification_click" >
         </activity>
     </application>
 
