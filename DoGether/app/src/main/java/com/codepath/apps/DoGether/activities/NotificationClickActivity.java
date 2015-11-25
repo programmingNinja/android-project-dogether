@@ -1,6 +1,7 @@
 package com.codepath.apps.DoGether.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,9 +11,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.apps.DoGether.R;
+import com.codepath.apps.DoGether.helpers.CircleTransformation;
 import com.codepath.apps.DoGether.helpers.ImageUtility;
 import com.codepath.apps.DoGether.models.User;
+import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 public class NotificationClickActivity extends ActionBarActivity {
 
@@ -31,8 +35,14 @@ public class NotificationClickActivity extends ActionBarActivity {
         Toast.makeText(this,"HELLO MR"+userId,Toast.LENGTH_LONG).show();
         User userInfo = User.getUser(userId.toString());
         tvUname.setText(userInfo.get("name").toString());
-        tvJoinMeText.setText(message);
-        Picasso.with(this).load(ImageUtility.getModifiedImageUrl(userInfo.get("profile_image_url").toString())).fit().placeholder(R.drawable.abc_spinner_mtrl_am_alpha).into(ivJoinMePhoto);
+        tvJoinMeText.setText(message.toString());
+        Transformation transformation = new RoundedTransformationBuilder()
+                .borderColor(Color.BLACK)
+                .borderWidthDp(1)
+                .cornerRadiusDp(15)
+                .oval(false)
+                .build();
+        Picasso.with(this).load(ImageUtility.getModifiedImageUrl(userInfo.get("profile_image_url").toString())).fit().placeholder(R.drawable.abc_spinner_mtrl_am_alpha).transform(transformation).into(ivJoinMePhoto);
 
     }
 

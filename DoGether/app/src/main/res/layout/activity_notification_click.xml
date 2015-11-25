@@ -22,7 +22,8 @@
             android:layout_height="wrap_content"
             android:text="@string/tvJoinMe"
             android:id="@+id/textView"
-            android:textSize="50dp" />
+            android:textSize="40dp"
+            android:textColor="@color/text"/>
 
         <ImageView
             android:layout_width="200dp"
@@ -37,7 +38,8 @@
             android:text="Username"
             android:id="@+id/tvJoinMeUname"
             android:layout_marginTop="10dp"
-            android:textSize="30dp" />
+            android:textSize="24dp"
+            android:textColor="@color/text"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -45,7 +47,8 @@
             android:text="eventText"
             android:id="@+id/tvJoinMeText"
             android:layout_marginTop="10dp"
-            android:textSize="20dp" />
+            android:textSize="16dp"
+            android:textColor="#292f33"/>
     </LinearLayout>
 
 </RelativeLayout>

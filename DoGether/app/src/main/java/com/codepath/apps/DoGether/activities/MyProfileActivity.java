@@ -2,6 +2,7 @@ package com.codepath.apps.DoGether.activities;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,10 +25,13 @@ import com.codepath.apps.DoGether.R;
 import com.codepath.apps.DoGether.RestApplication;
 import com.codepath.apps.DoGether.TwitterClient;
 import com.codepath.apps.DoGether.adapters.MyProfileAdapter;
+import com.codepath.apps.DoGether.helpers.ImageUtility;
 import com.codepath.apps.DoGether.helpers.SimpleItemTouchHelperCallback;
 import com.codepath.apps.DoGether.models.Event;
 import com.codepath.apps.DoGether.models.User;
+import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,10 +83,16 @@ public class MyProfileActivity extends AppCompatActivity implements AdapterView.
         adapter.notifyDataSetChanged();
 
         profilePic = (ImageView) findViewById(R.id.profilePic);
+        Transformation transformation = new RoundedTransformationBuilder()
+                .borderWidthDp(1)
+                .cornerRadiusDp(15)
+                .oval(false)
+                .build();
+
         Picasso.with(this).
-                load(User.getProfilePicUrl(LocalUser.getUser())).
+                load(ImageUtility.getModifiedImageUrl(User.getProfilePicUrl(LocalUser.getUser()))).
                 fit().
-                placeholder(R.drawable.abc_spinner_mtrl_am_alpha).
+                placeholder(R.drawable.abc_spinner_mtrl_am_alpha).transform(transformation).
                 into(profilePic);
 
         ItemTouchHelper.Callback callback =

@@ -1,10 +1,15 @@
 package com.codepath.apps.DoGether.helpers;
 
+import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.codepath.apps.DoGether.R;
 import com.codepath.apps.DoGether.activities.NotificationClickActivity;
 import com.parse.ParsePushBroadcastReceiver;
 
@@ -33,11 +38,19 @@ public class NotificationProcessor extends ParsePushBroadcastReceiver {
             i.putExtra("userMsg",message);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(i);
-
-            Log.d("PUSHDATA", pushData.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    protected Notification getNotification(Context context, Intent intent) {
+        Notification notification = super.getNotification(context, intent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            notification.color = ContextCompat.getColor(context,R.color.text);
+
+        }
+        return notification;
     }
 }
