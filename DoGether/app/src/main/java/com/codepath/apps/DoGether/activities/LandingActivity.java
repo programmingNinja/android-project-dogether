@@ -68,9 +68,9 @@ public class LandingActivity extends AppCompatActivity {
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
-        nvDrawer.getMenu().getItem(0).setChecked(true);
+        nvDrawer.getMenu().getItem(1).setChecked(true);
         setSupportActionBar(toolbar);
-
+        getSupportActionBar().setTitle("Community Wall");
         client = RestApplication.getRestClient();
 
         SimpleProgressDialog dialog = SimpleProgressDialog.build(this, "loading...");

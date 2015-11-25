@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:text="@string/username"
             android:id="@+id/tvComUserUsername"
-            android:textColor="#3B94D9"
+            android:textColor="@color/text"
             android:textSize="18dp"
              android:layout_marginLeft="10dp" />
 

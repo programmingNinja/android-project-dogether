@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.Spinner;
 
 import com.codepath.apps.DoGether.LocalModels.LocalSubscription;
@@ -58,6 +59,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     DrawerLayout dlDrawer;
     ActionBarDrawerToggle drawerToggle;
     NavigationView nvDrawer;
+    FrameLayout frameLayout;
 
 
     @Override
@@ -69,7 +71,6 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
-
 
         // Find our drawer view
         dlDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
