@@ -99,6 +99,8 @@ public class LandingActivity extends AppCompatActivity {
         String communityId = LocalSubscription.getCommunity();
         final ParseQuery<Event> query = ParseQuery.getQuery(Event.class);
         query.whereEqualTo("communityId", communityId);
+        query.orderByDescending("createdAt");
+        query.setLimit(20);
         query.findInBackground(new FindCallback<Event>() {
             public void done(List<Event> itemList, ParseException e) {
                 if (e == null) {
