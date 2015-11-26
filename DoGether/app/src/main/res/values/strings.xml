@@ -53,5 +53,6 @@
     <string name="broadcatBtnText">Save Event</string>
     <string name="btnSelect">Select</string>
     <string name="pickYourTime">Pick your time</string>
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
 
 </resources>
