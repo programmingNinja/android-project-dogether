@@ -17,7 +17,27 @@
         android:layout_height="match_parent"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        >
+     >
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/DoGether"
+            android:id="@+id/tvDogether"
+            android:textSize="30dp"
+            android:textIsSelectable="false"
+            android:textColor="#6533cc"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="60dp"
+            android:textStyle="bold|italic"
+            android:layout_marginBottom="30dp" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,11 +45,9 @@
         android:id="@+id/tvEventExercise"
         android:textSize="16dp"
         android:textIsSelectable="false"
-        android:textStyle="bold"
         android:textColor="#6533cc"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="80dp" />
+        android:layout_below="@id/tvDogether"
+        android:textStyle="bold" />
 
     <android.support.v7.widget.AppCompatSpinner
         android:layout_width="fill_parent"
@@ -42,7 +60,8 @@
         android:layout_marginBottom="8dp"
         android:dropDownSelector="@color/text"
         style="@style/Widget.AppCompat.Spinner.Underlined"
-        app:backgroundTint="@color/text"/>
+        app:backgroundTint="@color/text"
+        android:textAlignment="center" />
 
 
 
@@ -53,9 +72,9 @@
         android:id="@+id/tvEventType"
         android:textSize="16dp"
         android:textIsSelectable="true"
-        android:textStyle="bold"
         android:textColor="#6533cc"
-        android:layout_below="@id/spEventExercise"/>
+        android:layout_below="@id/spEventExercise"
+        android:textStyle="bold" />
     <android.support.v7.widget.AppCompatSpinner
         android:layout_width="fill_parent"
         android:layout_height="35dp"
@@ -71,47 +90,44 @@
         />
 
 
+     <TextView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:id="@+id/tvSelectTime"
+         android:textSize="16dp"
+         android:textIsSelectable="true"
+         android:textColor="#6533cc"
+         android:layout_below="@id/spEventExerciseType"
+         android:text="@string/pickYourTime"
+         android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvEventTime"
-        android:textSize="20dp"
-        android:textIsSelectable="true"
-        android:textStyle="bold"
-        android:textColor="#6533cc"
-        android:text="@string/eventTime"
-        android:layout_below="@+id/spEventExerciseType"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp" />
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/etSelectedTime"
+            android:layout_below="@+id/tvSelectTime"
+            android:layout_alignParentStart="true"
+            android:hint="@string/selectedTime"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/text"
+            android:textSize="16dp" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:text="@string/broadcastEventButton"
-        android:id="@+id/btnBroadcast"
-        android:clickable="false"
-        android:textColor="#ffffff"
-        android:background="#6533cc"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/timePicker"
-        android:foregroundGravity="top"
-        android:layout_marginBottom="8dp" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnBroadcast"
+            android:layout_below="@+id/etSelectedTime"
+            android:layout_centerHorizontal="true"
+            android:text="@string/broadcatBtnText"
+            android:background="@color/text"
+            android:textColor="#ffffff"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp" />
 
-    <TimePicker
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/timePicker"
-        android:timePickerMode="spinner"
-        android:clickable="true"
-        android:touchscreenBlocksFocus="false"
-        android:numbersTextColor="#ffffff"
-        android:scaleX="0.9"
-        android:scaleY="0.9"
-        android:amPmTextColor="@color/text"
-        android:layout_below="@+id/tvEventTime"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/background_spinner"/>
+    </LinearLayout>
 
     </RelativeLayout>
 </RelativeLayout>

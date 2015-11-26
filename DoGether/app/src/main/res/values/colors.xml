@@ -5,4 +5,5 @@
     <color name="accent">#FF9800</color>
     <color name="toolbar_theme">#6533cc</color>
     <color name="text">#6533cc</color>
+    <color name="whiteText">#ffffff</color>
 </resources>

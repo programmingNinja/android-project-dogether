@@ -2,7 +2,9 @@ package com.codepath.apps.DoGether.activities;
 
 import android.app.Activity;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
@@ -21,8 +23,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
+
 
 import com.codepath.apps.DoGether.LocalModels.LocalSubscription;
 import com.codepath.apps.DoGether.LocalModels.LocalUser;
@@ -52,9 +59,12 @@ public class CreateEventActivity  extends AppCompatActivity {
     private Spinner spEventExercise;
     private Spinner spEventExerciseType;
     private TimePicker timePicker;
+    private TextView etTimeText;
+    private Button btnTimePicker;
     private Button broadcastEvent;
     private String userId;
     private String communityId;
+    private String time;
     private List<User>userList;
 
     Toolbar toolbar;
@@ -67,6 +77,7 @@ public class CreateEventActivity  extends AppCompatActivity {
         final Calendar calendar = Calendar.getInstance();
         communityId = LocalSubscription.getCommunity();
         userId = LocalUser.getUser();
+
         broadcastEvent.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Snackbar.make(findViewById(android.R.id.content), "Do you want to broadcast ?", Snackbar.LENGTH_LONG).setAction("Broadcast", new View.OnClickListener() {
@@ -76,6 +87,38 @@ public class CreateEventActivity  extends AppCompatActivity {
                     }
 
                 }).show();
+
+            }
+        });
+
+        etTimeText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar now = Calendar.getInstance();
+                com.wdullaer.materialdatetimepicker.time.TimePickerDialog tpd = com.wdullaer.materialdatetimepicker.time.TimePickerDialog.newInstance(new com.wdullaer.materialdatetimepicker.time.TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(RadialPickerLayout radialPickerLayout, int i, int i2, int i3) {
+
+                        time = getTime(i, i2);
+                        etTimeText.setText(time.toString());
+
+                    }
+                }, now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), true);
+
+                tpd.setThemeDark(true);
+                tpd.vibrate(true);
+                tpd.dismissOnPause(true);
+                tpd.setAccentColor(Color.parseColor("#FF9800"));
+                tpd.setTitle("TimePicker Title");
+
+                tpd.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialogInterface) {
+                        Log.d("TimePicker", "Dialog was cancelled");
+                    }
+                });
+                tpd.show(getFragmentManager(), "Timepickerdialog");
+
 
             }
         });
@@ -118,15 +161,37 @@ public class CreateEventActivity  extends AppCompatActivity {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.Exercise, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spEventExercise.setAdapter(adapter);
-        timePicker = (TimePicker)findViewById(R.id.timePicker);
+        //timePicker = (TimePicker)findViewById(R.id.timePicker);
         broadcastEvent = (Button)findViewById(R.id.btnBroadcast);
         // Find the toolbar view inside the activity layout
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        etTimeText = (TextView)findViewById(R.id.etSelectedTime);
+        etTimeText.setHintTextColor(getResources().getColor(android.R.color.black));
+        etTimeText.setFocusable(true);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Create Event");
 
         // Apply the adapter to the spinner
 
+    }
+
+    public String getTime(int hours, int min){
+
+        StringBuilder sb = new StringBuilder();
+        if(hours<=12){
+            sb.append(String.valueOf(hours));
+            sb.append(":");
+            sb.append(String.valueOf(min));
+            sb.append("AM");
+
+        }
+        else{
+            sb.append(String.valueOf(hours-12));
+            sb.append(":");
+            sb.append(String.valueOf(min));
+            sb.append("PM");
+        }
+      return sb.toString();
     }
 
     public void broadcastEventToUsers (String comId) {
@@ -192,7 +257,7 @@ public class CreateEventActivity  extends AppCompatActivity {
         eventText.append("type:" +" ");
         eventText.append(spEventExerciseType.getSelectedItem().toString() +" ");
         eventText.append("at" +" ");
-        eventText.append(timePicker.getCurrentHour() + ":" + timePicker.getCurrentMinute());
+        eventText.append(etTimeText.getText().toString());
         return eventText.toString();
     }
 

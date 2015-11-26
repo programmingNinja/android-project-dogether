@@ -21,6 +21,7 @@
     <string name="logout">Logout</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    <string name="DoGether">DoGether !</string>
 
     <string-array name="Exercise">
         <item>Upper body workout</item>
@@ -48,5 +49,9 @@
 
     <string name="title_activity_notification_click">NotificationClickActivity</string>
     <string name="tvJoinMe">Join Me !</string>
+    <string name="selectedTime">Click here to select time !</string>
+    <string name="broadcatBtnText">Save Event</string>
+    <string name="btnSelect">Select</string>
+    <string name="pickYourTime">Pick your time</string>
 
 </resources>
