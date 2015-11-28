@@ -52,6 +52,8 @@ public class LandingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SimpleProgressDialog dialog = SimpleProgressDialog.build(this, "loading...");
+        dialog.show();
         setContentView(R.layout.activity_landing);
 
         // Find the toolbar view inside the activity layout
@@ -77,8 +79,6 @@ public class LandingActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Community Wall");
         client = RestApplication.getRestClient();
 
-        SimpleProgressDialog dialog = SimpleProgressDialog.build(this, "loading...");
-        dialog.show();
         setUpViews();
         getEventsForCommunity();
         dialog.dismiss();
