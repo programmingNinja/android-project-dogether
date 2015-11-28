@@ -32,7 +32,6 @@ public class NotificationClickActivity extends ActionBarActivity {
         Intent i = getIntent();
         String userId = i.getStringExtra("userId");
         String message = i.getStringExtra("userMsg");
-        Toast.makeText(this,"HELLO MR"+userId,Toast.LENGTH_LONG).show();
         User userInfo = User.getUser(userId.toString());
         tvUname.setText(userInfo.get("name").toString());
         tvJoinMeText.setText(message.toString());

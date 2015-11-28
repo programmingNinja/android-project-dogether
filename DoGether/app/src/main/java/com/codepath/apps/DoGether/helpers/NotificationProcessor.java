@@ -28,7 +28,6 @@ public class NotificationProcessor extends ParsePushBroadcastReceiver {
         super.onPushOpen(context, intent);
         JSONObject pushData = null;
         try {
-            Toast.makeText(context,"HELLO NOTIFIER",Toast.LENGTH_LONG).show();
             pushData = new JSONObject(intent.getStringExtra("com.parse.Data"));
             String userId = pushData.getString("userId");
             String message = pushData.getString("alert");
