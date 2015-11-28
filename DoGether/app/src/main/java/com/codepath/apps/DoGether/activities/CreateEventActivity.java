@@ -207,7 +207,6 @@ public class CreateEventActivity  extends AppCompatActivity {
                         }
                     }
                     if(userList !=null && userList.size()>0) {
-                        Toast.makeText(CreateEventActivity.this, "HELLO", Toast.LENGTH_LONG).show();
                         //Form Event Text
                         String eventText = formEventText();
                         //Enter data to database
