@@ -27,10 +27,11 @@ tools:context="com.codepath.apps.DoGether.activities.MyProfileActivity">-->
         android:layout_marginTop="100dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"/>
-<android.support.v7.widget.RecyclerView
-    android:id="@+id/rvEvents"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvEvents"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>
 

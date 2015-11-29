@@ -54,5 +54,6 @@
     <string name="btnSelect">Select</string>
     <string name="pickYourTime">Pick your time</string>
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
+    <string name="demo_expand_customtitle1">name is rohan</string>
 
 </resources>

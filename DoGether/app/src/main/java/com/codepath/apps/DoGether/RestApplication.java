@@ -9,6 +9,7 @@ import com.codepath.apps.DoGether.LocalModels.LocalSubscription;
 import com.codepath.apps.DoGether.LocalModels.LocalUser;
 import com.codepath.apps.DoGether.models.Community;
 import com.codepath.apps.DoGether.models.Event;
+import com.codepath.apps.DoGether.models.Joining;
 import com.codepath.apps.DoGether.models.Subscription;
 import com.codepath.apps.DoGether.models.User;
 import com.parse.Parse;
@@ -44,6 +45,7 @@ public class RestApplication extends com.orm.SugarApp {
 		ParseObject.registerSubclass(User.class);
 		ParseObject.registerSubclass(Event.class);
 		ParseObject.registerSubclass(Community.class);
+		ParseObject.registerSubclass(Joining.class);
 		Parse.initialize(this, YOUR_APPLICATION_ID, YOUR_CLIENT_KEY);
         //ParseUser.enableAutomaticUser();
         ParseACL defaultACL = new ParseACL();

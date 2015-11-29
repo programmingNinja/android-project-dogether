@@ -1,5 +1,7 @@
 package com.codepath.apps.DoGether.activities;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -15,9 +17,11 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.codepath.apps.DoGether.LocalModels.LocalEvent;
 import com.codepath.apps.DoGether.LocalModels.LocalUser;
@@ -61,6 +65,7 @@ public class MyProfileActivity extends AppCompatActivity implements AdapterView.
 
         // Find RecyclerView and bind to adapter
         rv = (RecyclerView) findViewById(R.id.rvEvents);
+
         // Bind adapter to list
         rv.setAdapter(adapter);
 
@@ -124,6 +129,7 @@ public class MyProfileActivity extends AppCompatActivity implements AdapterView.
 
         client = RestApplication.getRestClient();
         //instantiate();
+
     }
 
     @Override
@@ -217,6 +223,8 @@ public class MyProfileActivity extends AppCompatActivity implements AdapterView.
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 
 //    private void instantiate() {
 //        String[] objectIds = new LocalEvent().getAll();

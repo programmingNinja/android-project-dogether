@@ -10,9 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.codepath.apps.DoGether.LocalModels.LocalUser;
 import com.codepath.apps.DoGether.R;
 import com.codepath.apps.DoGether.helpers.CircleTransformation;
 import com.codepath.apps.DoGether.helpers.ImageUtility;
+import com.codepath.apps.DoGether.models.Joining;
 import com.codepath.apps.DoGether.models.User;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
@@ -23,6 +25,7 @@ public class NotificationClickActivity extends ActionBarActivity {
     ImageView ivJoinMePhoto;
     TextView tvUname;
     TextView tvJoinMeText;
+    String eventId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,7 @@ public class NotificationClickActivity extends ActionBarActivity {
         Intent i = getIntent();
         String userId = i.getStringExtra("userId");
         String message = i.getStringExtra("userMsg");
+        eventId = i.getStringExtra("eventId");
         User userInfo = User.getUser(userId.toString());
         tvUname.setText(userInfo.get("name").toString());
         tvJoinMeText.setText(message.toString());
@@ -45,6 +49,9 @@ public class NotificationClickActivity extends ActionBarActivity {
 
     }
 
+    public void joinEvent() {
+        Joining.setJoiningUser(eventId, LocalUser.getUser());
+    }
 
     public void setUpView(){
         ivJoinMePhoto = (ImageView)findViewById(R.id.ivJoinMePhoto);

@@ -7,11 +7,12 @@
     android:layout_marginRight="@dimen/grid_margin"
     android:layout_marginTop="@dimen/cell_margin"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     card_view:cardCornerRadius="@dimen/card_corner_radius"
     card_view:cardElevation="@dimen/card_elevation"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
+    android:nestedScrollingEnabled="true"
     >
 
     <RelativeLayout
@@ -63,6 +64,23 @@
             android:layout_marginBottom="5dp"
             android:textColor="#292f33"
             android:textSize="16dp" />
+        <LinearLayout
+            android:id="@+id/expandable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFF"
+            android:orientation="vertical"
+            android:layout_below="@id/tvEventName">
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/lvExpandableText"
+                android:layout_below="@id/linelay1"
+                android:layout_marginBottom="5dp"
+                android:textColor="#292f33"
+                android:textSize="16dp"
+                />
+            </LinearLayout>
 
     </RelativeLayout>
 

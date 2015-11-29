@@ -23,7 +23,16 @@
             android:text="@string/tvJoinMe"
             android:id="@+id/textView"
             android:textSize="40dp"
-            android:textColor="@color/text"/>
+            android:textColor="@color/text"
+            android:onClick="joinEvent"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Join"
+            android:id="@+id/bJoin"
+            android:textColor="#ffc042"
+            android:clickable="true" />
 
         <ImageView
             android:layout_width="200dp"

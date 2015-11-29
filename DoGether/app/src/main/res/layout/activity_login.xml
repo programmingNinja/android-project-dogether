@@ -7,10 +7,10 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.codepath.apps.DoGether.activities.LoginActivity"
-    >
+    android:background="@drawable/image_for_login">
 
-    <Button
-        android:layout_width="match_parent"
+    <ImageButton
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="loginToRest"
         android:text="@string/login_label"
@@ -18,22 +18,10 @@
         android:layout_marginRight="30dp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:background="@color/text"
         android:textColor="#ffffff"
-        android:id="@+id/button"
+        android:id="@+id/bJoin"
+        android:src="@drawable/twitter_login_button4"
+        android:background="@android:color/transparent"
         />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvhomeDogether"
-        android:layout_above="@+id/button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="45dp"
-        android:text="@string/DoGether"
-        android:textSize="30dp"
-        android:textIsSelectable="false"
-        android:textColor="#6533cc"
-        android:textStyle="bold|italic"/>
 
 </RelativeLayout>

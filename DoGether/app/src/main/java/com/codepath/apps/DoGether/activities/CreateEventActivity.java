@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.codepath.apps.DoGether.models.Joining;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 
@@ -209,10 +210,18 @@ public class CreateEventActivity  extends AppCompatActivity {
                     if(userList !=null && userList.size()>0) {
                         //Form Event Text
                         String eventText = formEventText();
+
                         //Enter data to database
-                        saveEventToParseDb(eventText);
+                        Event newEvent = saveEventToParseDb(eventText);
+
+                        // create joining object in parse
+                        Joining j = new Joining();
+                        String eventObjectId = newEvent.getObjectId();
+                        j.createJoining(eventObjectId);
+
                         //Enter data for Push Notification
-                        broadcast(eventText.toString());
+                        broadcast(eventText.toString(), eventObjectId);
+
                         //Go to CommunityView
                         Intent i = new Intent(CreateEventActivity.this, LandingActivity.class);
                         startActivity(i);
@@ -236,16 +245,16 @@ public class CreateEventActivity  extends AppCompatActivity {
 
     }
 
-    private void saveEventToParseDb(String eventText){
+    private Event saveEventToParseDb(String eventText){
+        Event event = new Event(eventText,communityId);
         try{
-            Event event = new Event(eventText,communityId);
             event.saveEvent();
             event.setUserRelation();
         }
         catch(Exception e){
             e.printStackTrace();
         }
-
+        return event;
     }
 
     private String formEventText(){
@@ -260,13 +269,13 @@ public class CreateEventActivity  extends AppCompatActivity {
         return eventText.toString();
     }
 
-    public void broadcast(String eventText){
+    public void broadcast(String eventText, String eventId){
         ParsePush push = new ParsePush();
         LinkedList<String> channels = new LinkedList<String>();
         for(User user : userList){
             channels.add(user.getObjectId().toString());
         }
-        JSONObject data = getJSONDataMessage(eventText);
+        JSONObject data = getJSONDataMessage(eventText, eventId);
 
         push.setData(data);
         push.setChannels(channels); // Notice we use setChannels not setChannel
@@ -274,13 +283,14 @@ public class CreateEventActivity  extends AppCompatActivity {
         push.sendInBackground();
     }
 
-    private JSONObject getJSONDataMessage(String eventText)
+    private JSONObject getJSONDataMessage(String eventText, String eventId)
     {
         try
         {
             JSONObject data = new JSONObject();
             data.put("userId",userId );
             data.put("alert",eventText);
+            data.put("eventId", eventId);
             return data;
         }
         catch(JSONException x)

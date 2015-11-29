@@ -90,8 +90,6 @@ public class LandingActivity extends AppCompatActivity {
         userEvents = new ArrayList<>();
         aUserEvents = new LandingActivityViewAdapter(this,userEvents);
         lvCommunityView.setAdapter(aUserEvents);
-
-
     }
 
     public void getEventsForCommunity() {

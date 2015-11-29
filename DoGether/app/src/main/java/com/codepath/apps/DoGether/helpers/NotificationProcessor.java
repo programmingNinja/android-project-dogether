@@ -31,10 +31,12 @@ public class NotificationProcessor extends ParsePushBroadcastReceiver {
             pushData = new JSONObject(intent.getStringExtra("com.parse.Data"));
             String userId = pushData.getString("userId");
             String message = pushData.getString("alert");
+            String eventId = pushData.getString("eventId");
             Intent i = new Intent();
             i.setClass(context,NotificationClickActivity.class);
             i.putExtra("userId",userId);
             i.putExtra("userMsg",message);
+            i.putExtra("eventId", eventId);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(i);
         } catch (JSONException e) {

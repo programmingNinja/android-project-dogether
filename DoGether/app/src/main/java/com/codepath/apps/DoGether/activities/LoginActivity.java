@@ -39,6 +39,9 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 		} else {
 			Intent i = new Intent(this, LandingActivity.class);
 			startActivity(i);
+
+//			Intent i = new Intent(this, MyProfileActivity.class);
+//			startActivity(i);
 		}
 
 	}
