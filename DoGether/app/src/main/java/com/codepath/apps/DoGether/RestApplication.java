@@ -47,12 +47,11 @@ public class RestApplication extends com.orm.SugarApp {
 		ParseObject.registerSubclass(Community.class);
 		ParseObject.registerSubclass(Joining.class);
 		Parse.initialize(this, YOUR_APPLICATION_ID, YOUR_CLIENT_KEY);
-        //ParseUser.enableAutomaticUser();
+		ParseUser.enableAutomaticUser();
         ParseACL defaultACL = new ParseACL();
         // Optionally enable public read access.
         defaultACL.setPublicReadAccess(true);
-
-        ParseACL.setDefaultACL(defaultACL, true);
+		ParseACL.setDefaultACL(defaultACL, true);
 
 		// community records added hence commenting out
 		//insertIntoCommunities();

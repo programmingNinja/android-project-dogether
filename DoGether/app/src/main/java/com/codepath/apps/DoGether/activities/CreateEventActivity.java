@@ -80,7 +80,9 @@ public class CreateEventActivity  extends AppCompatActivity {
         userId = LocalUser.getUser();
 
         broadcastEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
+                broadcastEventToUsers(communityId);
                 Snackbar.make(findViewById(android.R.id.content), "Do you want to broadcast ?", Snackbar.LENGTH_LONG).setAction("Broadcast", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -133,14 +135,12 @@ public class CreateEventActivity  extends AppCompatActivity {
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spEventExerciseType.setAdapter(adapter);
 
-                }
-                else if (spEventExercise.getSelectedItem().equals("Lower body workout")) {
+                } else if (spEventExercise.getSelectedItem().equals("Lower body workout")) {
                     ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(CreateEventActivity.this, R.array.lbw, android.R.layout.simple_spinner_item);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spEventExerciseType.setAdapter(adapter);
 
-                }
-                else if  (spEventExercise.getSelectedItem().equals("Cardio")) {
+                } else if (spEventExercise.getSelectedItem().equals("Cardio")) {
                     ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(CreateEventActivity.this, R.array.other, android.R.layout.simple_spinner_item);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spEventExerciseType.setAdapter(adapter);
@@ -207,7 +207,7 @@ public class CreateEventActivity  extends AppCompatActivity {
                             userList.add(user);
                         }
                     }
-                    if(userList !=null && userList.size()>0) {
+                    if(userList !=null) {
                         //Form Event Text
                         String eventText = formEventText();
 
@@ -218,15 +218,14 @@ public class CreateEventActivity  extends AppCompatActivity {
                         Joining j = new Joining();
                         String eventObjectId = newEvent.getObjectId();
                         j.createJoining(eventObjectId);
-
-                        //Enter data for Push Notification
-                        broadcast(eventText.toString(), eventObjectId);
-
+                        if (userList.size() > 0) {
+                            //Enter data for Push Notification
+                            broadcast(eventText.toString(), eventObjectId);
+                        }
                         //Go to CommunityView
                         Intent i = new Intent(CreateEventActivity.this, LandingActivity.class);
                         startActivity(i);
                     }
-                    // access your user list here
 
                 } else {
                     // results have all the developer objects in the Icon

@@ -75,30 +75,30 @@ public class MyProfileAdapter extends RecyclerView.Adapter<MyProfileAdapter.Even
         holder.eventName.setText(events.get(position).getString("text"));
 
         // testing
-        List<User> joinedUsers = new ArrayList<>();
-        joinedUsers.add(User.getUser(LocalUser.getUser()));
-        joinedUsers.add(User.getUser(LocalUser.getUser()));
-        joinedUsers.add(User.getUser(LocalUser.getUser()));
-        joinedUsers.add(User.getUser(LocalUser.getUser()));
+//        List<User> joinedUsers = new ArrayList<>();
+//        joinedUsers.add(User.getUser(LocalUser.getUser()));
+//        joinedUsers.add(User.getUser(LocalUser.getUser()));
+//        joinedUsers.add(User.getUser(LocalUser.getUser()));
+//        joinedUsers.add(User.getUser(LocalUser.getUser()));
+//
+//        holder.joinedUserList.addAll(joinedUsers);
 
-        holder.joinedUserList.addAll(joinedUsers);
-
-//        String eventId = events.get(position).getObjectId();
-//        Joining j = Joining.getJoining(eventId);
-//        if(j != null) {
-//            ParseRelation<User> joiningRelation = j.getRelation("users");
-//            joiningRelation.getQuery().findInBackground(new FindCallback<User>() {
-//                public void done(List<User> results, ParseException e) {
-//                    if (e == null) {
-//                        // access your user list here
-//                        holder.joinedUserList.addAll(results);
-//                        holder.joinedUserAdapter.notifyDataSetChanged();
-//                    } else {
-//                        // results have all the developer objects in the Icon
-//                    }
-//                }
-//            });
-//        }
+        String eventId = events.get(position).getObjectId();
+        Joining j = Joining.getJoining(eventId);
+        if(j != null) {
+            ParseRelation<User> joiningRelation = j.getRelation("users");
+            joiningRelation.getQuery().findInBackground(new FindCallback<User>() {
+                public void done(List<User> results, ParseException e) {
+                    if (e == null) {
+                        // access your user list here
+                        holder.joinedUserList.addAll(results);
+                        holder.joinedUserAdapter.notifyDataSetChanged();
+                    } else {
+                        // results have all the developer objects in the Icon
+                    }
+                }
+            });
+        }
 
 
 

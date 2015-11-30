@@ -107,6 +107,7 @@ public class LandingActivity extends AppCompatActivity {
                         try {
                             LandingActivityView lv = new LandingActivityView();
                             lv.setComUserEventText(itemList.get(j).get("text").toString());
+                            //System.out.println("text "+itemList.get(j).get("text").toString());
                             ParseQuery query = itemList.get(j).getRelation("fromUser").getQuery();
                             ParseObject parseObject = query.getFirst();
                             lv.setComUserUserName(parseObject.get("name").toString());

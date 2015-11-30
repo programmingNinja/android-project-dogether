@@ -86,7 +86,7 @@ public class Event extends ParseObject {
                         LocalEvent localEvent = new LocalEvent(event.getObjectId());
                         localEvent.save();
                         ParseRelation relation = event.getRelation("fromUser");
-                        Log.i("Event:", "relation=" + relation.toString());
+                        System.out.println("Event: "+ " relation=" + relation.toString());
                         relation.add(userFromParse);
                         event.saveInBackground();
                     } else {

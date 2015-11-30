@@ -3,11 +3,13 @@ package com.codepath.apps.DoGether.models;
 import com.activeandroid.util.Log;
 import com.codepath.apps.DoGether.LocalModels.LocalUser;
 import com.parse.FindCallback;
+import com.parse.ParseACL;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.util.List;
@@ -22,6 +24,10 @@ public class Joining extends ParseObject  {
 
     public void createJoining(String eventId){
         this.put("eventId", eventId);
+        ParseACL acl = new ParseACL();
+        acl.setPublicReadAccess(true);
+        acl.setPublicWriteAccess(true);
+        this.setACL(acl);
         this.saveInBackground();
     }
 
@@ -55,9 +61,10 @@ public class Joining extends ParseObject  {
                     if (itemList.size() > 0) {
                         Joining j = itemList.get(0);
                         User u = User.getUser(userId);
-                        ParseRelation relation = j.getRelation("users");
-                        relation.add(u);
-                        j.saveInBackground();
+                        j.setRelation(u);
+//                        ParseRelation relation = j.getRelation("users");
+//                        relation.add(u);
+//                        j.saveInBackground();
                     }
                 } else {
                     //Log.d("item", "Error: " + e.getMessage());
