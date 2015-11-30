@@ -1,5 +1,7 @@
 package com.codepath.apps.DoGether.models;
 
+import java.util.Date;
+
 /**
  * Created by msamant on 11/7/15.
  */
@@ -7,7 +9,17 @@ public class LandingActivityView {
     String comUserUserName;
     String comUserEventText;
     String comUserUserPhoto;
+    Date comCreateTime;
 
+    public Date getComCreateTime() {
+        System.out.println("returning date "+ this.comCreateTime);
+        return comCreateTime;
+    }
+
+    public void setComCreateTime(Date comCreateTime) {
+        this.comCreateTime = comCreateTime;
+        System.out.println("setting date "+ comCreateTime);
+    }
 
     public String getComUserUserName() {
         return comUserUserName;

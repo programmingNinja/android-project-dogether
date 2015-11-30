@@ -23,6 +23,8 @@ import com.codepath.apps.DoGether.LocalModels.LocalEvent;
 import com.codepath.apps.DoGether.LocalModels.LocalUser;
 import com.codepath.apps.DoGether.R;
 import com.codepath.apps.DoGether.activities.MyProfileActivity;
+import com.codepath.apps.DoGether.helpers.DateFormatter;
+import com.codepath.apps.DoGether.helpers.ImageUtility;
 import com.codepath.apps.DoGether.models.Community;
 import com.codepath.apps.DoGether.models.Event;
 import com.codepath.apps.DoGether.models.Joining;
@@ -73,7 +75,7 @@ public class MyProfileAdapter extends RecyclerView.Adapter<MyProfileAdapter.Even
         User u = User.getUser(LocalUser.getUser());
         holder.username.setText(u.getString("name"));
         holder.eventName.setText(events.get(position).getString("text"));
-
+        holder.createdAt.setText(DateFormatter.getTimeAgo(events.get(position).getCreatedAt().getTime(), mContext));
         // testing
 //        List<User> joinedUsers = new ArrayList<>();
 //        joinedUsers.add(User.getUser(LocalUser.getUser()));
@@ -109,11 +111,11 @@ public class MyProfileAdapter extends RecyclerView.Adapter<MyProfileAdapter.Even
                 .oval(false)
                 .build();
         Picasso.with(mContext).
-                load(u.getString("profile_image_url")).
-                fit().
-                placeholder(R.drawable.abc_spinner_mtrl_am_alpha).
-                transform(transformation).
-                into(holder.profilePicture);
+                load(ImageUtility.getModifiedImageUrl(u.getString("profile_image_url"))).
+                        fit().
+                        placeholder(R.drawable.abc_spinner_mtrl_am_alpha).
+                        transform(transformation).
+                        into(holder.profilePicture);
 
     }
 
@@ -150,11 +152,11 @@ public class MyProfileAdapter extends RecyclerView.Adapter<MyProfileAdapter.Even
         CardView cv;
         TextView username;
         TextView eventName;
+        TextView createdAt;
         ImageView profilePicture;
         CardView mainLayout;
         LinearLayout expandingLayout;
         ListView expandEvents;
-
         JoinedUserAdapter joinedUserAdapter;
         List<User> joinedUserList;
 
@@ -164,6 +166,7 @@ public class MyProfileAdapter extends RecyclerView.Adapter<MyProfileAdapter.Even
             username = (TextView)itemView.findViewById(R.id.tvUsername);
             eventName = (TextView)itemView.findViewById(R.id.tvEventName);
             profilePicture = (ImageView)itemView.findViewById(R.id.ivProfilPic);
+            createdAt = (TextView) itemView.findViewById(R.id.tvCreateTime);
             expandingLayout = (LinearLayout)itemView.findViewById(R.id.expandable);
             expandingLayout.setVisibility(View.GONE);
             mainLayout = (CardView)itemView.findViewById(R.id.cv);

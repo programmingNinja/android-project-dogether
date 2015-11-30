@@ -19,6 +19,7 @@ import com.codepath.apps.DoGether.R;
 import com.codepath.apps.DoGether.RestApplication;
 import com.codepath.apps.DoGether.TwitterClient;
 import com.codepath.apps.DoGether.adapters.LandingActivityViewAdapter;
+import com.codepath.apps.DoGether.helpers.DateFormatter;
 import com.codepath.apps.DoGether.helpers.SimpleProgressDialog;
 import com.codepath.apps.DoGether.models.Event;
 import com.codepath.apps.DoGether.models.LandingActivityView;
@@ -33,6 +34,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class LandingActivity extends AppCompatActivity {
@@ -112,6 +114,7 @@ public class LandingActivity extends AppCompatActivity {
                             ParseObject parseObject = query.getFirst();
                             lv.setComUserUserName(parseObject.get("name").toString());
                             lv.setComUserUserPhoto(parseObject.get("profile_image_url").toString());
+                            lv.setComCreateTime(parseObject.getCreatedAt());
                             userEvents.add(lv);
                         } catch (ParseException e1) {
                             e1.printStackTrace();

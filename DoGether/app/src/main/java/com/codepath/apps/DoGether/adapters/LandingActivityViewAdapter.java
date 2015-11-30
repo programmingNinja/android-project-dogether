@@ -10,11 +10,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.apps.DoGether.R;
+import com.codepath.apps.DoGether.helpers.DateFormatter;
+import com.codepath.apps.DoGether.helpers.ImageUtility;
 import com.codepath.apps.DoGether.models.LandingActivityView;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +36,7 @@ public class LandingActivityViewAdapter extends ArrayAdapter<LandingActivityView
             TextView username;
             TextView eventName;
             ImageView profilePicture;
+            TextView createdAt;
         }
 
 
@@ -53,6 +57,7 @@ public class LandingActivityViewAdapter extends ArrayAdapter<LandingActivityView
                 viewHolder.username = (TextView) row.findViewById(R.id.tvComUserUsername);
                 viewHolder.eventName = (TextView) row.findViewById(R.id.tvComUserEvent);
                 viewHolder.profilePicture = (ImageView)row.findViewById(R.id.ivComUserPhoto);
+                viewHolder.createdAt = (TextView)row.findViewById(R.id.tvCreateTime);
                 row.setTag(viewHolder);
             }
             else {
@@ -70,13 +75,18 @@ public class LandingActivityViewAdapter extends ArrayAdapter<LandingActivityView
             LandingActivityView card = getItem(position);
             viewHolder.username.setText(card.getComUserUserName());
             viewHolder.eventName.setText(card.getComUserEventText());
+
+            DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getContext());
+            System.out.println("formatted date inside " + DateFormatter.getTimeAgo(card.getComCreateTime().getTime(), getContext()));
+            viewHolder.createdAt.setText(DateFormatter.getTimeAgo(card.getComCreateTime().getTime(), getContext()));
+
             Transformation transformation = new RoundedTransformationBuilder()
                     .borderColor(Color.BLACK)
                     .borderWidthDp(1)
                     .cornerRadiusDp(15)
                     .oval(false)
                     .build();
-            Picasso.with(getContext()).load(landingActivityView.getComUserUserPhoto()).fit().placeholder(R.drawable.abc_spinner_mtrl_am_alpha).transform(transformation).into(viewHolder.profilePicture);
+            Picasso.with(getContext()).load(ImageUtility.getModifiedImageUrl(landingActivityView.getComUserUserPhoto())).fit().placeholder(R.drawable.abc_spinner_mtrl_am_alpha).transform(transformation).into(viewHolder.profilePicture);
 
             return row;
 

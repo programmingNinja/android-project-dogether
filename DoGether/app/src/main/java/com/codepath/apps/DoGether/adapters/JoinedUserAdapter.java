@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.apps.DoGether.R;
+import com.codepath.apps.DoGether.helpers.ImageUtility;
 import com.codepath.apps.DoGether.models.User;
 import com.squareup.picasso.Picasso;
 
@@ -51,10 +52,10 @@ public class JoinedUserAdapter extends ArrayAdapter<User> {
 
         holder.txtUsername.setText(user.getString("name"));
         Picasso.with(getContext()).
-                load(user.getString("profile_image_url")).
-                fit().
-                placeholder(R.drawable.abc_spinner_mtrl_am_alpha).
-                into(holder.imageView);
+                load(ImageUtility.getModifiedImageUrl(user.getString("profile_image_url"))).
+                        fit().
+                        placeholder(R.drawable.abc_spinner_mtrl_am_alpha).
+                        into(holder.imageView);
         return convertView;
     }
 }
