@@ -77,7 +77,6 @@ public class LandingActivityViewAdapter extends ArrayAdapter<LandingActivityView
             viewHolder.eventName.setText(card.getComUserEventText());
 
             DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getContext());
-            System.out.println("formatted date inside " + DateFormatter.getTimeAgo(card.getComCreateTime().getTime(), getContext()));
             viewHolder.createdAt.setText(DateFormatter.getTimeAgo(card.getComCreateTime().getTime(), getContext()));
 
             Transformation transformation = new RoundedTransformationBuilder()

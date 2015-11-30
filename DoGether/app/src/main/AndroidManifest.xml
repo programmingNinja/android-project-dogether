@@ -33,7 +33,7 @@
     <application
         android:name=".RestApplication"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher1"
+        android:icon="@drawable/icon2"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <meta-data
@@ -49,11 +49,25 @@
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="com.codepath.apps.DoGether" />
 
+        <!-- Splash screen -->
+        <activity
+            android:name=".activities.SplashScreenActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Main activity -->
         <activity
             android:name=".activities.LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme" >
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -62,7 +76,7 @@
                 <data
                     android:host="twitterclient"
                     android:scheme="oauth" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity android:name=".activities.ProfileActivity" >
         </activity>
@@ -106,15 +120,7 @@
             android:name=".activities.NotificationClickActivity"
             android:label="@string/title_activity_notification_click" >
         </activity>
-        <activity
-            android:name=".activities.SplashScreenActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+
     </application>
 
 </manifest>

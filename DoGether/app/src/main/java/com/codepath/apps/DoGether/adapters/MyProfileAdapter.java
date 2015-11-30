@@ -211,7 +211,7 @@ public class MyProfileAdapter extends RecyclerView.Adapter<MyProfileAdapter.Even
                     //Update Height
                     //int value = (Integer) valueAnimator.getAnimatedValue();
                     ViewGroup.LayoutParams layoutParams = expandingLayout.getLayoutParams();
-                    layoutParams.height = listView.getAdapter().getCount()*20;
+                    layoutParams.height = listView.getAdapter().getCount()*40;
                     expandingLayout.setLayoutParams(layoutParams);
                 }
             });

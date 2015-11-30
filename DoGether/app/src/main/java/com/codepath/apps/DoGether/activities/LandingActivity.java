@@ -79,6 +79,7 @@ public class LandingActivity extends AppCompatActivity {
         setupDrawerContent(nvDrawer);
         nvDrawer.getMenu().getItem(1).setChecked(true);
         getSupportActionBar().setTitle("Community Wall");
+        getSupportActionBar().setIcon(R.drawable.toolbaricon1);
         client = RestApplication.getRestClient();
 
         setUpViews();

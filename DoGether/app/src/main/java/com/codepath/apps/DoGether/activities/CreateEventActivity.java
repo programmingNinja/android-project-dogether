@@ -171,6 +171,7 @@ public class CreateEventActivity  extends AppCompatActivity {
         etTimeText.setFocusable(true);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Create Event");
+        getSupportActionBar().setIcon(R.drawable.toolbaricon1);
 
         // Apply the adapter to the spinner
 
