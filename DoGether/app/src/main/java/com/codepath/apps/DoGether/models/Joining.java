@@ -52,16 +52,13 @@ public class Joining extends ParseObject  {
         getJoining.findInBackground(new FindCallback<Joining>() {
             public void done(List<Joining> itemList, ParseException e) {
                 if (e == null) {
-                    if (itemList.size() <= 0) {
+                    if (itemList.size() > 0) {
                         Joining j = itemList.get(0);
                         User u = User.getUser(userId);
-                        j.setRelation(u);
+                        ParseRelation relation = j.getRelation("users");
+                        relation.add(u);
+                        j.saveInBackground();
                     }
-
-                    //else System.out.println("duplicate user");
-                    // Access the array of results here
-                    //String firstItemId = itemList.get(0).getObjectId();
-                    //Toast.makeText(TodoItemsActivity.this, firstItemId, Toast.LENGTH_SHORT).show();
                 } else {
                     //Log.d("item", "Error: " + e.getMessage());
                     Log.e("User", "Error in saving " + e.getMessage());

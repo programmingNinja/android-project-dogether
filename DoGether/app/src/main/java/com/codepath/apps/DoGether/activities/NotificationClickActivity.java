@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,8 +50,10 @@ public class NotificationClickActivity extends ActionBarActivity {
 
     }
 
-    public void joinEvent() {
+    public void joinEvent(View v) {
         Joining.setJoiningUser(eventId, LocalUser.getUser());
+        Toast.makeText(this, "You joined this event", Toast.LENGTH_LONG);
+        startActivity(new Intent(NotificationClickActivity.this, LandingActivity.class));
     }
 
     public void setUpView(){
