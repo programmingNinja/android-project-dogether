@@ -203,6 +203,7 @@ public class LandingActivity extends AppCompatActivity {
                 break;
             case R.id.logout:
                 client.logout();
+                startActivity(new Intent(this, LoginActivity.class));
                 break;
             default:
                 startActivity(new Intent(this, ProfileActivity.class));
