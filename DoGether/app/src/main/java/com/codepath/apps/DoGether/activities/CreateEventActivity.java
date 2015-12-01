@@ -28,6 +28,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.codepath.apps.DoGether.models.Joining;
+import com.plattysoft.leonids.ParticleSystem;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 
@@ -82,14 +83,17 @@ public class CreateEventActivity  extends AppCompatActivity {
         broadcastEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                new ParticleSystem(CreateEventActivity.this, 50, R.drawable.star_pink, 750, R.id.background_hook)
+                        .setSpeedRange(0.1f, 0.20f)
+                        .oneShot(v,50);
                 broadcastEventToUsers(communityId);
-                Snackbar.make(findViewById(android.R.id.content), "Do you want to broadcast ?", Snackbar.LENGTH_LONG).setAction("Broadcast", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        broadcastEventToUsers(communityId);
-                    }
-
-                }).show();
+//                Snackbar.make(findViewById(android.R.id.content), "Do you want to broadcast ?", Snackbar.LENGTH_LONG).setAction("Broadcast", new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        broadcastEventToUsers(communityId);
+//                    }
+//
+//                }).show();
 
             }
         });
@@ -159,7 +163,7 @@ public class CreateEventActivity  extends AppCompatActivity {
     public void setUpViews(){
         spEventExercise = (Spinner)findViewById(R.id.spEventExercise);
         spEventExerciseType =(Spinner)findViewById(R.id.spEventExerciseType);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.Exercise, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Exercise, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spEventExercise.setAdapter(adapter);
         //timePicker = (TimePicker)findViewById(R.id.timePicker);

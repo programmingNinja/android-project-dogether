@@ -7,7 +7,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.codepath.apps.DoGether.activities.LoginActivity"
-    android:background="@drawable/crossfit1">
+    android:background="@drawable/crossfit">
 
     <ImageButton
         android:layout_width="250dp"

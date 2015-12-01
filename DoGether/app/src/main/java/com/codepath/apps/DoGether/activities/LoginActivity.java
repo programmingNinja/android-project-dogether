@@ -39,6 +39,8 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 		} else {
 			Intent i = new Intent(this, LandingActivity.class);
 			startActivity(i);
+			//card transition
+			overridePendingTransition(R.anim.from_middle, R.anim.to_middle);
 
 //			Intent i = new Intent(this, MyProfileActivity.class);
 //			startActivity(i);

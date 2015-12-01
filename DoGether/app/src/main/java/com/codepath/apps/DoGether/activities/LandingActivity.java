@@ -206,6 +206,10 @@ public class LandingActivity extends AppCompatActivity {
         switch(menuItem.getItemId()) {
             case R.id.my_profile:
                 startActivity(new Intent(this, MyProfileActivity.class));
+                // sliding
+                // overridePendingTransition(R.anim.left_in, R.anim.right_out);
+                // card
+                overridePendingTransition(R.anim.from_middle, R.anim.to_middle);
                 break;
             case R.id.subscribed_community:
                 System.out.println("subscribed clicked");

@@ -186,6 +186,12 @@ public class MyProfileActivity extends AppCompatActivity implements AdapterView.
             case R.id.subscribed_community:
                 System.out.println("subscribed clicked");
                 startActivity(new Intent(this, LandingActivity.class));
+                // vine open
+                //overridePendingTransition(R.anim.activity_open_translate,R.anim.activity_close_scale);
+
+                //card
+                overridePendingTransition(R.anim.from_middle, R.anim.to_middle);
+
                 break;
             case R.id.search_community:
                 System.out.println("search clicked");
