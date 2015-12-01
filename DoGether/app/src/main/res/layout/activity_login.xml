@@ -7,21 +7,20 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.codepath.apps.DoGether.activities.LoginActivity"
-    android:background="@drawable/image_for_login">
+    android:background="@drawable/crossfit1">
 
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
         android:onClick="loginToRest"
         android:text="@string/login_label"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
         android:textColor="#ffffff"
         android:id="@+id/bJoin"
         android:src="@drawable/twitter_login_button4"
         android:background="@android:color/transparent"
-        />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
