@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -49,6 +50,7 @@ public class LandingActivity extends AppCompatActivity {
     DrawerLayout dlDrawer;
     ActionBarDrawerToggle drawerToggle;
     NavigationView nvDrawer;
+    private SwipeRefreshLayout swipeContainer;
 
 
     @Override
@@ -83,7 +85,18 @@ public class LandingActivity extends AppCompatActivity {
         client = RestApplication.getRestClient();
 
         setUpViews();
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getEventsForCommunity();
+
+            }
+        });
+
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,android.R.color.holo_green_light,android.R.color.holo_orange_light,android.R.color.holo_red_light);
         getEventsForCommunity();
+
         dialog.dismiss();
 
     }
@@ -123,6 +136,7 @@ public class LandingActivity extends AppCompatActivity {
                     }
 
                     aUserEvents.notifyDataSetChanged();
+                    swipeContainer.setRefreshing(false);
 
                 }
             }
