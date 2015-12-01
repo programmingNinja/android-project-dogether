@@ -114,7 +114,7 @@ public class MyProfileActivity extends AppCompatActivity implements AdapterView.
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("My Profile");
-        getSupportActionBar().setIcon(R.drawable.toolbaricon1);
+        //getSupportActionBar().setIcon(R.drawable.toolbaricon1);
         // Find our drawer view
         dlDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerToggle = setupDrawerToggle();
