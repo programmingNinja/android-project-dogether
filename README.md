@@ -23,9 +23,9 @@ Making generic application, which will work in multiple domains with publish-sub
 
 [Wire frames: Screen views]
 
-![Video Walkthrough](project1.png)
-![Video Walkthrough](project2.png)
-![Video Walkthrough](project3.png)
-![Video Walkthrough](project4.png)
-![Video Walkthrough](project5.png)
+![Video Walkthrough](project1.gif)
+![Video Walkthrough](project2.gif)
+![Video Walkthrough](project3.gif)
+![Video Walkthrough](project4.gif)
+![Video Walkthrough](project7.gif)
 ![DB schema](androidProjectDBSchema.png)
