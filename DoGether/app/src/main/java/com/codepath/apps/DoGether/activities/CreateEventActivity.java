@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.codepath.apps.DoGether.helpers.NetworkConnection;
 import com.codepath.apps.DoGether.models.Joining;
 import com.plattysoft.leonids.ParticleSystem;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
@@ -83,10 +84,11 @@ public class CreateEventActivity  extends AppCompatActivity {
         broadcastEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new ParticleSystem(CreateEventActivity.this, 50, R.drawable.star_pink, 750, R.id.background_hook)
-                        .setSpeedRange(0.1f, 0.20f)
-                        .oneShot(v,50);
-                broadcastEventToUsers(communityId);
+                if (NetworkConnection.isNetworkAvailable(v.getContext())) {
+                    new ParticleSystem(CreateEventActivity.this, 50, R.drawable.star_pink, 750, R.id.background_hook)
+                            .setSpeedRange(0.1f, 0.20f)
+                            .oneShot(v, 50);
+                    broadcastEventToUsers(communityId);
 //                Snackbar.make(findViewById(android.R.id.content), "Do you want to broadcast ?", Snackbar.LENGTH_LONG).setAction("Broadcast", new View.OnClickListener() {
 //                    @Override
 //                    public void onClick(View v) {
@@ -94,7 +96,8 @@ public class CreateEventActivity  extends AppCompatActivity {
 //                    }
 //
 //                }).show();
-
+                } else
+                    Toast.makeText(v.getContext(), R.string.networkUnavailable, Toast.LENGTH_LONG);
             }
         });
 
@@ -201,64 +204,72 @@ public class CreateEventActivity  extends AppCompatActivity {
     }
 
     public void broadcastEventToUsers (String comId) {
-        Community currentCom = Community.getCommunityObj(comId);
-        ParseRelation<User> communityParseRelation = currentCom.getRelation("userRelation");
-        communityParseRelation.getQuery().findInBackground(new FindCallback<User>() {
-            public void done(List<User> results, ParseException e) {
-                if (e == null) {
-                    userList = new ArrayList<User>();
-                    for(User user : results){
-                        if(!userId.equals(user.getObjectId().toString())){
-                            userList.add(user);
+        if (NetworkConnection.isNetworkAvailable(this)) {
+            Community currentCom = Community.getCommunityObj(comId);
+            ParseRelation<User> communityParseRelation = currentCom.getRelation("userRelation");
+            communityParseRelation.getQuery().findInBackground(new FindCallback<User>() {
+                public void done(List<User> results, ParseException e) {
+                    if (e == null) {
+                        userList = new ArrayList<User>();
+                        for (User user : results) {
+                            if (!userId.equals(user.getObjectId().toString())) {
+                                userList.add(user);
+                            }
                         }
-                    }
-                    if(userList !=null) {
-                        //Form Event Text
-                        String eventText = formEventText();
+                        if (userList != null) {
+                            //Form Event Text
+                            String eventText = formEventText();
 
-                        //Enter data to database
-                        Event newEvent = saveEventToParseDb(eventText);
+                            //Enter data to database
+                            Event newEvent = saveEventToParseDb(eventText);
 
-                        // create joining object in parse
-                        Joining j = new Joining();
-                        String eventObjectId = newEvent.getObjectId();
-                        j.createJoining(eventObjectId);
-                        if (userList.size() > 0) {
-                            //Enter data for Push Notification
-                            broadcast(eventText.toString(), eventObjectId);
+                            // create joining object in parse
+                            Joining j = new Joining();
+                            String eventObjectId = newEvent.getObjectId();
+                            j.createJoining(eventObjectId);
+                            if (userList.size() > 0) {
+                                //Enter data for Push Notification
+                                broadcast(eventText.toString(), eventObjectId);
+                            }
+                            //Go to CommunityView
+                            Intent i = new Intent(CreateEventActivity.this, LandingActivity.class);
+                            startActivity(i);
                         }
-                        //Go to CommunityView
-                        Intent i = new Intent(CreateEventActivity.this, LandingActivity.class);
-                        startActivity(i);
-                    }
 
-                } else {
-                    // results have all the developer objects in the Icon
+                    } else {
+                        // results have all the developer objects in the Icon
+                    }
                 }
-            }
-        });
+            });
+        } else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG);
 
     }
 
     public void removeFromUserList(){
-        for(int j=0;j<userList.size();j++){
-            if(userId.equals(userList.get(j).getObjectId().toString())){
-                userList.remove(j);
+        if (NetworkConnection.isNetworkAvailable(this)) {
+            for (int j = 0; j < userList.size(); j++) {
+                if (userId.equals(userList.get(j).getObjectId().toString())) {
+                    userList.remove(j);
+                }
             }
-        }
+        } else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG);
 
     }
 
-    private Event saveEventToParseDb(String eventText){
-        Event event = new Event(eventText,communityId);
-        try{
-            event.saveEvent();
-            event.setUserRelation();
+    private Event saveEventToParseDb(String eventText) {
+        if (NetworkConnection.isNetworkAvailable(this)) {
+            Event event = new Event(eventText, communityId);
+            try {
+                event.saveEvent();
+                event.setUserRelation();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return event;
+        } else {
+            Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG);
+            return null;
         }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-        return event;
     }
 
     private String formEventText(){
@@ -267,24 +278,27 @@ public class CreateEventActivity  extends AppCompatActivity {
         eventText.append("workout:" +" ");
         eventText.append(spEventExercise.getSelectedItem().toString()+ " ");
         eventText.append("type:" +" ");
-        eventText.append(spEventExerciseType.getSelectedItem().toString() +" ");
-        eventText.append("at" +" ");
+        eventText.append(spEventExerciseType.getSelectedItem().toString() + " ");
+        eventText.append("at" + " ");
         eventText.append(etTimeText.getText().toString());
         return eventText.toString();
     }
 
     public void broadcast(String eventText, String eventId){
-        ParsePush push = new ParsePush();
-        LinkedList<String> channels = new LinkedList<String>();
-        for(User user : userList){
-            channels.add(user.getObjectId().toString());
-        }
-        JSONObject data = getJSONDataMessage(eventText, eventId);
+        if (NetworkConnection.isNetworkAvailable(this)) {
+            ParsePush push = new ParsePush();
+            LinkedList<String> channels = new LinkedList<String>();
+            for (User user : userList) {
+                channels.add(user.getObjectId().toString());
+            }
+            JSONObject data = getJSONDataMessage(eventText, eventId);
 
-        push.setData(data);
-        push.setChannels(channels); // Notice we use setChannels not setChannel
-        //push.setMessage(eventText);
-        push.sendInBackground();
+            push.setData(data);
+            push.setChannels(channels); // Notice we use setChannels not setChannel
+            //push.setMessage(eventText);
+            push.sendInBackground();
+        }
+        else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG);
     }
 
     private JSONObject getJSONDataMessage(String eventText, String eventId)

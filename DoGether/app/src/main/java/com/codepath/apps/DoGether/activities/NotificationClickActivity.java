@@ -15,6 +15,7 @@ import com.codepath.apps.DoGether.LocalModels.LocalUser;
 import com.codepath.apps.DoGether.R;
 import com.codepath.apps.DoGether.helpers.CircleTransformation;
 import com.codepath.apps.DoGether.helpers.ImageUtility;
+import com.codepath.apps.DoGether.helpers.NetworkConnection;
 import com.codepath.apps.DoGether.models.Joining;
 import com.codepath.apps.DoGether.models.User;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
@@ -34,26 +35,31 @@ public class NotificationClickActivity extends ActionBarActivity {
         setContentView(R.layout.activity_notification_click);
         setUpView();
         Intent i = getIntent();
-        String userId = i.getStringExtra("userId");
-        String message = i.getStringExtra("userMsg");
-        eventId = i.getStringExtra("eventId");
-        User userInfo = User.getUser(userId.toString());
-        tvUname.setText(userInfo.get("name").toString());
-        tvJoinMeText.setText(message.toString());
-        Transformation transformation = new RoundedTransformationBuilder()
-                .borderColor(Color.BLACK)
-                .borderWidthDp(1)
-                .cornerRadiusDp(15)
-                .oval(false)
-                .build();
-        Picasso.with(this).load(ImageUtility.getModifiedImageUrl(userInfo.get("profile_image_url").toString())).fit().placeholder(R.drawable.abc_spinner_mtrl_am_alpha).transform(transformation).into(ivJoinMePhoto);
-
+        if (NetworkConnection.isNetworkAvailable(this)) {
+            String userId = i.getStringExtra("userId");
+            String message = i.getStringExtra("userMsg");
+            eventId = i.getStringExtra("eventId");
+            User userInfo = User.getUser(userId.toString());
+            tvUname.setText(userInfo.get("name").toString());
+            tvJoinMeText.setText(message.toString());
+            Transformation transformation = new RoundedTransformationBuilder()
+                    .borderColor(Color.BLACK)
+                    .borderWidthDp(1)
+                    .cornerRadiusDp(15)
+                    .oval(false)
+                    .build();
+            Picasso.with(this).load(ImageUtility.getModifiedImageUrl(userInfo.get("profile_image_url").toString())).fit().placeholder(R.drawable.abc_spinner_mtrl_am_alpha).transform(transformation).into(ivJoinMePhoto);
+        }
+        else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG);
     }
 
     public void joinEvent(View v) {
-        Joining.setJoiningUser(eventId, LocalUser.getUser());
-        Toast.makeText(this, "You joined this event", Toast.LENGTH_LONG);
-        startActivity(new Intent(NotificationClickActivity.this, LandingActivity.class));
+        if (NetworkConnection.isNetworkAvailable(this)) {
+            Joining.setJoiningUser(eventId, LocalUser.getUser());
+            Toast.makeText(this, "You joined this event", Toast.LENGTH_LONG);
+            startActivity(new Intent(NotificationClickActivity.this, LandingActivity.class));
+        }
+        else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG);
     }
 
     public void setUpView(){

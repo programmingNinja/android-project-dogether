@@ -21,6 +21,5 @@
                     android:title="@string/logout"
                     android:id="@+id/logout"/>
 
-
     </group>
 </menu>

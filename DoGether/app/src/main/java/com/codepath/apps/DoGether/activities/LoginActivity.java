@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Toast;
 
 import com.codepath.apps.DoGether.LocalModels.LocalSubscription;
 import com.codepath.apps.DoGether.R;
 import com.codepath.apps.DoGether.TwitterClient;
+import com.codepath.apps.DoGether.helpers.NetworkConnection;
 import com.codepath.oauth.OAuthLoginActionBarActivity;
 
 public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
@@ -59,7 +61,9 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 	// Uses the client to initiate OAuth authorization
 	// This should be tied to a button used to login
 	public void loginToRest(View view) {
-		getClient().connect();
+		if (NetworkConnection.isNetworkAvailable(this)) {
+			getClient().connect();
+		} else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG);
 
 
 		/*ParseTwitterUtils.logIn(this, new LogInCallback() {

@@ -22,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.codepath.apps.DoGether.LocalModels.LocalEvent;
 import com.codepath.apps.DoGether.LocalModels.LocalUser;
@@ -30,6 +31,7 @@ import com.codepath.apps.DoGether.RestApplication;
 import com.codepath.apps.DoGether.TwitterClient;
 import com.codepath.apps.DoGether.adapters.MyProfileAdapter;
 import com.codepath.apps.DoGether.helpers.ImageUtility;
+import com.codepath.apps.DoGether.helpers.NetworkConnection;
 import com.codepath.apps.DoGether.helpers.SimpleItemTouchHelperCallback;
 import com.codepath.apps.DoGether.models.Event;
 import com.codepath.apps.DoGether.models.User;
@@ -79,26 +81,31 @@ public class MyProfileActivity extends AppCompatActivity implements AdapterView.
         // There are three LayoutManager provided at the moment: GridLayoutManager, StaggeredGridLayoutManager and LinearLayoutManager.
         rv.setLayoutManager(layout);
 
-        // get data
-        String[] objectIds = new LocalEvent().getAll();
-        events = Event.getEvents(objectIds);
+        if (NetworkConnection.isNetworkAvailable(this)) {
+            // get data
+            String[] objectIds = new LocalEvent().getAll();
+            events = Event.getEvents(objectIds);
 
-        adapter.setEvents(events);
+            adapter.setEvents(events);
 
-        adapter.notifyDataSetChanged();
+            adapter.notifyDataSetChanged();
 
-        profilePic = (ImageView) findViewById(R.id.profilePic);
-        Transformation transformation = new RoundedTransformationBuilder()
-                .borderWidthDp(1)
-                .cornerRadiusDp(15)
-                .oval(false)
-                .build();
+            profilePic = (ImageView) findViewById(R.id.profilePic);
+            Transformation transformation = new RoundedTransformationBuilder()
+                    .borderWidthDp(1)
+                    .cornerRadiusDp(15)
+                    .oval(false)
+                    .build();
 
-        Picasso.with(this).
-                load(ImageUtility.getModifiedImageUrl(User.getProfilePicUrl(LocalUser.getUser()))).
-                fit().
-                placeholder(R.drawable.abc_spinner_mtrl_am_alpha).transform(transformation).
-                into(profilePic);
+            Picasso.with(this).
+                    load(ImageUtility.getModifiedImageUrl(User.getProfilePicUrl(LocalUser.getUser()))).
+                    fit().
+                    placeholder(R.drawable.abc_spinner_mtrl_am_alpha).transform(transformation).
+                    into(profilePic);
+            client = RestApplication.getRestClient();
+
+        }
+        else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG);
 
         ItemTouchHelper.Callback callback =
                 new SimpleItemTouchHelperCallback(adapter);
@@ -127,9 +134,6 @@ public class MyProfileActivity extends AppCompatActivity implements AdapterView.
         // Setup drawer view
         setupDrawerContent(nvDrawer);
         nvDrawer.getMenu().getItem(0).setChecked(true);
-
-        client = RestApplication.getRestClient();
-        //instantiate();
 
     }
 
@@ -163,13 +167,11 @@ public class MyProfileActivity extends AppCompatActivity implements AdapterView.
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
-        System.out.println("outer item clicked");
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
 
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        System.out.println("item clicked");
                         selectDrawerItem(menuItem);
                         return true;
                     }
@@ -184,7 +186,6 @@ public class MyProfileActivity extends AppCompatActivity implements AdapterView.
                 startActivity(new Intent(this, ProfileActivity.class));
                 break;
             case R.id.subscribed_community:
-                System.out.println("subscribed clicked");
                 startActivity(new Intent(this, LandingActivity.class));
                 // vine open
                 //overridePendingTransition(R.anim.activity_open_translate,R.anim.activity_close_scale);
@@ -194,7 +195,6 @@ public class MyProfileActivity extends AppCompatActivity implements AdapterView.
 
                 break;
             case R.id.search_community:
-                System.out.println("search clicked");
                 startActivity(new Intent(this, LandingActivity.class));
                 break;
             case R.id.logout:

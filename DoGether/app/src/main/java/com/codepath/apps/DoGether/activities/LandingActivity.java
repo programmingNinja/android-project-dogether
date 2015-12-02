@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.codepath.apps.DoGether.LocalModels.LocalSubscription;
 import com.codepath.apps.DoGether.R;
@@ -21,6 +22,7 @@ import com.codepath.apps.DoGether.RestApplication;
 import com.codepath.apps.DoGether.TwitterClient;
 import com.codepath.apps.DoGether.adapters.LandingActivityViewAdapter;
 import com.codepath.apps.DoGether.helpers.DateFormatter;
+import com.codepath.apps.DoGether.helpers.NetworkConnection;
 import com.codepath.apps.DoGether.helpers.SimpleProgressDialog;
 import com.codepath.apps.DoGether.models.Event;
 import com.codepath.apps.DoGether.models.LandingActivityView;
@@ -82,21 +84,23 @@ public class LandingActivity extends AppCompatActivity {
         nvDrawer.getMenu().getItem(1).setChecked(true);
         getSupportActionBar().setTitle("Community Wall");
         //getSupportActionBar().setIcon(R.drawable.toolbaricon1);
-        client = RestApplication.getRestClient();
+        if (NetworkConnection.isNetworkAvailable(this)) {
+            client = RestApplication.getRestClient();
 
-        setUpViews();
-        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getEventsForCommunity();
+            setUpViews();
+            swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+            swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    getEventsForCommunity();
 
-            }
-        });
+                }
+            });
 
-        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,android.R.color.holo_green_light,android.R.color.holo_orange_light,android.R.color.holo_red_light);
-        getEventsForCommunity();
-
+            swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
+            getEventsForCommunity();
+        }
+        else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG);
         dialog.dismiss();
 
     }
@@ -212,16 +216,17 @@ public class LandingActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.from_middle, R.anim.to_middle);
                 break;
             case R.id.subscribed_community:
-                System.out.println("subscribed clicked");
-                startActivity(new Intent(this, CommunityActivity.class));
+                startActivity(new Intent(this, LandingActivity.class));
                 break;
             case R.id.search_community:
-                System.out.println("search clicked");
                 startActivity(new Intent(this, LandingActivity.class));
                 break;
             case R.id.logout:
-                client.logout();
-                startActivity(new Intent(this, LoginActivity.class));
+                if (NetworkConnection.isNetworkAvailable(this)) {
+                    client.logout();
+                    startActivity(new Intent(this, LoginActivity.class));
+                }
+                else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG);
                 break;
             default:
                 startActivity(new Intent(this, ProfileActivity.class));

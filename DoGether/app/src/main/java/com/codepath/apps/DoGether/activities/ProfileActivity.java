@@ -21,12 +21,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.codepath.apps.DoGether.LocalModels.LocalSubscription;
 import com.codepath.apps.DoGether.LocalModels.LocalUser;
 import com.codepath.apps.DoGether.R;
 import com.codepath.apps.DoGether.RestApplication;
 import com.codepath.apps.DoGether.TwitterClient;
+import com.codepath.apps.DoGether.helpers.NetworkConnection;
 import com.codepath.apps.DoGether.helpers.SimpleProgressDialog;
 import com.codepath.apps.DoGether.models.Subscription;
 import com.codepath.apps.DoGether.models.User;
@@ -95,36 +97,45 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         btnSubscribe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                subscribe(communitiesSpinner.getSelectedItemPosition());
+                if(NetworkConnection.isNetworkAvailable(v.getContext())) {
+                    subscribe(communitiesSpinner.getSelectedItemPosition());
+                }
+                else Toast.makeText(v.getContext(), R.string.networkUnavailable, Toast.LENGTH_LONG);
             }
         });
 
-        client = RestApplication.getRestClient();
-        client.getUserInfo(new JsonHttpResponseHandler() {
+        if(NetworkConnection.isNetworkAvailable(this)) {
+            client = RestApplication.getRestClient();
+            client.getUserInfo(new JsonHttpResponseHandler() {
 
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.d("profileAct", "profileAct callback");
-                super.onSuccess(statusCode, headers, response);
-                currentUser = User.fromJson(response);
-                //System.out.println("Response: " + response.toString());
-            }
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    Log.d("profileAct", "profileAct callback");
+                    super.onSuccess(statusCode, headers, response);
+                    currentUser = User.fromJson(response);
+                    //System.out.println("Response: " + response.toString());
+                }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-                Log.e("FAILED: " , errorResponse.toString());
-            }
-        });
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                    Log.e("FAILED: ", errorResponse.toString());
+                }
+            });
+        }
+        else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG);
         dialog.dismiss();
     }
 
 
 
     private void instantiate() {
-        communitiesSpinner = (Spinner)findViewById(R.id.spinnerCommunities);
-        btnSubscribe = (Button)findViewById(R.id.btnSubscribe);
-        populateSpinner();
+        if(NetworkConnection.isNetworkAvailable(this)) {
+            communitiesSpinner = (Spinner) findViewById(R.id.spinnerCommunities);
+            btnSubscribe = (Button) findViewById(R.id.btnSubscribe);
+            populateSpinner();
+        }
+        else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG);
     }
 
     private void populateSpinner() {
@@ -199,7 +210,10 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Log.i("profileAct", "onItemClick");
-        subscribe(position);
+        if(NetworkConnection.isNetworkAvailable(this)) {
+            subscribe(position);
+        }
+        else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG);
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
@@ -223,7 +237,6 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
 
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        System.out.println("item clicked");
                         selectDrawerItem(menuItem);
                         return true;
                     }
@@ -238,15 +251,16 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                 startActivity(new Intent(this, ProfileActivity.class));
                 break;
             case R.id.subscribed_community:
-                System.out.println("subscribed clicked");
                 startActivity(new Intent(this, CommunityActivity.class));
                 break;
             case R.id.search_community:
-                System.out.println("search clicked");
                 startActivity(new Intent(this, LandingActivity.class));
                 break;
             case R.id.logout:
-                client.logout();
+                if (NetworkConnection.isNetworkAvailable(this)) {
+                    client.logout();
+                }
+                else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG);
                 break;
             default:
                 startActivity(new Intent(this, ProfileActivity.class));
