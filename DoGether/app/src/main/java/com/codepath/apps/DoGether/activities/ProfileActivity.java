@@ -100,7 +100,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                 if(NetworkConnection.isNetworkAvailable(v.getContext())) {
                     subscribe(communitiesSpinner.getSelectedItemPosition());
                 }
-                else Toast.makeText(v.getContext(), R.string.networkUnavailable, Toast.LENGTH_LONG);
+                else Toast.makeText(v.getContext(), R.string.networkUnavailable, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -123,7 +123,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                 }
             });
         }
-        else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG);
+        else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG).show();
         dialog.dismiss();
     }
 
@@ -135,7 +135,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
             btnSubscribe = (Button) findViewById(R.id.btnSubscribe);
             populateSpinner();
         }
-        else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG);
+        else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG).show();
     }
 
     private void populateSpinner() {
@@ -213,7 +213,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         if(NetworkConnection.isNetworkAvailable(this)) {
             subscribe(position);
         }
-        else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG);
+        else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG).show();
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
@@ -251,7 +251,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                 startActivity(new Intent(this, ProfileActivity.class));
                 break;
             case R.id.subscribed_community:
-                startActivity(new Intent(this, CommunityActivity.class));
+                startActivity(new Intent(this, LandingActivity.class));
                 break;
             case R.id.search_community:
                 startActivity(new Intent(this, LandingActivity.class));
@@ -260,7 +260,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
                 if (NetworkConnection.isNetworkAvailable(this)) {
                     client.logout();
                 }
-                else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG);
+                else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG).show();
                 break;
             default:
                 startActivity(new Intent(this, ProfileActivity.class));

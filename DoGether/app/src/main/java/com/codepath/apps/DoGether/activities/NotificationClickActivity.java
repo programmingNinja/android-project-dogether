@@ -50,16 +50,16 @@ public class NotificationClickActivity extends ActionBarActivity {
                     .build();
             Picasso.with(this).load(ImageUtility.getModifiedImageUrl(userInfo.get("profile_image_url").toString())).fit().placeholder(R.drawable.abc_spinner_mtrl_am_alpha).transform(transformation).into(ivJoinMePhoto);
         }
-        else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG);
+        else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG).show();
     }
 
     public void joinEvent(View v) {
         if (NetworkConnection.isNetworkAvailable(this)) {
             Joining.setJoiningUser(eventId, LocalUser.getUser());
-            Toast.makeText(this, "You joined this event", Toast.LENGTH_LONG);
+            Toast.makeText(this, "You joined this event", Toast.LENGTH_LONG).show();
             startActivity(new Intent(NotificationClickActivity.this, LandingActivity.class));
         }
-        else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG);
+        else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG).show();
     }
 
     public void setUpView(){

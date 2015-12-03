@@ -63,7 +63,7 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 	public void loginToRest(View view) {
 		if (NetworkConnection.isNetworkAvailable(this)) {
 			getClient().connect();
-		} else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG);
+		} else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG).show();
 
 
 		/*ParseTwitterUtils.logIn(this, new LogInCallback() {

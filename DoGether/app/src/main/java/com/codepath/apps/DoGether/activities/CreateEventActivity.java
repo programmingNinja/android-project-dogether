@@ -97,7 +97,7 @@ public class CreateEventActivity  extends AppCompatActivity {
 //
 //                }).show();
                 } else
-                    Toast.makeText(v.getContext(), R.string.networkUnavailable, Toast.LENGTH_LONG);
+                    Toast.makeText(v.getContext(), R.string.networkUnavailable, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -241,7 +241,7 @@ public class CreateEventActivity  extends AppCompatActivity {
                     }
                 }
             });
-        } else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG);
+        } else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG).show();
 
     }
 
@@ -252,7 +252,7 @@ public class CreateEventActivity  extends AppCompatActivity {
                     userList.remove(j);
                 }
             }
-        } else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG);
+        } else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG).show();
 
     }
 
@@ -267,7 +267,7 @@ public class CreateEventActivity  extends AppCompatActivity {
             }
             return event;
         } else {
-            Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG);
+            Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG).show();
             return null;
         }
     }
@@ -298,7 +298,7 @@ public class CreateEventActivity  extends AppCompatActivity {
             //push.setMessage(eventText);
             push.sendInBackground();
         }
-        else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG);
+        else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG).show();
     }
 
     private JSONObject getJSONDataMessage(String eventText, String eventId)

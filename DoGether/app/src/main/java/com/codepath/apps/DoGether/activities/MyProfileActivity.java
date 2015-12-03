@@ -105,7 +105,7 @@ public class MyProfileActivity extends AppCompatActivity implements AdapterView.
             client = RestApplication.getRestClient();
 
         }
-        else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG);
+        else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG).show();
 
         ItemTouchHelper.Callback callback =
                 new SimpleItemTouchHelperCallback(adapter);

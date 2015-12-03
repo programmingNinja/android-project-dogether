@@ -84,7 +84,6 @@ public class LandingActivity extends AppCompatActivity {
         nvDrawer.getMenu().getItem(1).setChecked(true);
         getSupportActionBar().setTitle("Community Wall");
         //getSupportActionBar().setIcon(R.drawable.toolbaricon1);
-        if (NetworkConnection.isNetworkAvailable(this)) {
             client = RestApplication.getRestClient();
 
             setUpViews();
@@ -99,8 +98,7 @@ public class LandingActivity extends AppCompatActivity {
 
             swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
             getEventsForCommunity();
-        }
-        else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG);
+
         dialog.dismiss();
 
     }
@@ -114,7 +112,10 @@ public class LandingActivity extends AppCompatActivity {
 
     public void getEventsForCommunity() {
 
-        String communityId = LocalSubscription.getCommunity();
+        if (NetworkConnection.isNetworkAvailable(this)) {
+            System.out.println("No error");
+
+            String communityId = LocalSubscription.getCommunity();
         final ParseQuery<Event> query = ParseQuery.getQuery(Event.class);
         query.whereEqualTo("communityId", communityId);
         query.orderByDescending("createdAt");
@@ -145,6 +146,11 @@ public class LandingActivity extends AppCompatActivity {
                 }
             }
         });
+        }
+        else {
+            swipeContainer.setRefreshing(false);
+            Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG).show();
+        }
     }
 
 
@@ -226,7 +232,7 @@ public class LandingActivity extends AppCompatActivity {
                     client.logout();
                     startActivity(new Intent(this, LoginActivity.class));
                 }
-                else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG);
+                else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG).show();
                 break;
             default:
                 startActivity(new Intent(this, ProfileActivity.class));
