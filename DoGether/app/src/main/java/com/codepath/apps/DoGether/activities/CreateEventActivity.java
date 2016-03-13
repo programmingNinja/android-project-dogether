@@ -84,7 +84,6 @@ public class CreateEventActivity  extends AppCompatActivity {
         broadcastEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (NetworkConnection.isNetworkAvailable(v.getContext())) {
                     new ParticleSystem(CreateEventActivity.this, 50, R.drawable.star_pink, 750, R.id.background_hook)
                             .setSpeedRange(0.1f, 0.20f)
                             .oneShot(v, 50);
@@ -96,8 +95,7 @@ public class CreateEventActivity  extends AppCompatActivity {
 //                    }
 //
 //                }).show();
-                } else
-                    Toast.makeText(v.getContext(), R.string.networkUnavailable, Toast.LENGTH_LONG).show();
+
             }
         });
 
@@ -204,7 +202,7 @@ public class CreateEventActivity  extends AppCompatActivity {
     }
 
     public void broadcastEventToUsers (String comId) {
-        if (NetworkConnection.isNetworkAvailable(this)) {
+
             Community currentCom = Community.getCommunityObj(comId);
             ParseRelation<User> communityParseRelation = currentCom.getRelation("userRelation");
             communityParseRelation.getQuery().findInBackground(new FindCallback<User>() {
@@ -227,7 +225,7 @@ public class CreateEventActivity  extends AppCompatActivity {
                             Joining j = new Joining();
                             String eventObjectId = newEvent.getObjectId();
                             j.createJoining(eventObjectId);
-                            if (userList.size() > 0) {
+                            if (userList.size() >= 0) {
                                 //Enter data for Push Notification
                                 broadcast(eventText.toString(), eventObjectId);
                             }
@@ -241,7 +239,6 @@ public class CreateEventActivity  extends AppCompatActivity {
                     }
                 }
             });
-        } else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG).show();
 
     }
 
@@ -257,7 +254,6 @@ public class CreateEventActivity  extends AppCompatActivity {
     }
 
     private Event saveEventToParseDb(String eventText) {
-        if (NetworkConnection.isNetworkAvailable(this)) {
             Event event = new Event(eventText, communityId);
             try {
                 event.saveEvent();
@@ -266,10 +262,6 @@ public class CreateEventActivity  extends AppCompatActivity {
                 e.printStackTrace();
             }
             return event;
-        } else {
-            Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG).show();
-            return null;
-        }
     }
 
     private String formEventText(){
@@ -285,20 +277,19 @@ public class CreateEventActivity  extends AppCompatActivity {
     }
 
     public void broadcast(String eventText, String eventId){
-        if (NetworkConnection.isNetworkAvailable(this)) {
             ParsePush push = new ParsePush();
             LinkedList<String> channels = new LinkedList<String>();
-            for (User user : userList) {
-                channels.add(user.getObjectId().toString());
-            }
+//            for (User user : userList) {
+//                channels.add("cbkT6OiRtR");
+//            }
+        channels.add("VEzLhi5UH8");
             JSONObject data = getJSONDataMessage(eventText, eventId);
 
             push.setData(data);
             push.setChannels(channels); // Notice we use setChannels not setChannel
             //push.setMessage(eventText);
             push.sendInBackground();
-        }
-        else Toast.makeText(this, R.string.networkUnavailable, Toast.LENGTH_LONG).show();
+
     }
 
     private JSONObject getJSONDataMessage(String eventText, String eventId)

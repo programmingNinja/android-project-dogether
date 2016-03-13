@@ -1,8 +1,10 @@
 package com.codepath.apps.DoGether.helpers;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.support.v7.widget.helper.ItemTouchHelper.Callback;
+import android.widget.Toast;
 
 import com.codepath.apps.DoGether.adapters.ItemTouchHelperAdapter;
 
@@ -42,6 +44,7 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
         mAdapter.onItemDismiss(viewHolder.getAdapterPosition());
+        Toast.makeText(viewHolder.itemView.getContext(), "Event deleted", Toast.LENGTH_LONG).show();
     }
 
 }
